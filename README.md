@@ -1,6 +1,6 @@
 _struct.js is a utility-belt library for JavaScript that provides
-support for a functional (and imperative) data structures
-without extending any core JavaScript objects.
+support for functional data structures without extending any 
+core JavaScript objects.
 
 For Docs, License, Tests, and pre-packed downloads, see:
 http://structjs.org
