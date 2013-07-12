@@ -36,7 +36,7 @@
   }
 
   // Add all _struct objects to the Underscore library
-  _.each(['struct', 'list'], function (name) {
+  _.each(['list'], function (name) {
     _.mixin(name);
   });
 
