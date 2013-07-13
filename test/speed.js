@@ -2,7 +2,7 @@
 
   jslitmus.test('mapping multiplication to 10,000 elements', function() {
     var arr = [];
-    for (var i = 0; i < 10000; i++) { arr.push(i); }
+    for (var i = 0; i < 5; i++) { arr.push(i); }
     return _.map(arr, function(num) { return num * 3; });
   });
 

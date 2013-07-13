@@ -2,14 +2,19 @@ $(function () {
 
   module('List functions');
 
-  test('deepEqual', function() {
-    var arr =  ['foo1'],
-      sorted = ['foo1'];
-    deepEqual(arr, sorted, 'deep equal fails');
+  test('Create a list', function() {
+    var list = _.list([1, 2, 3]);
+    equal(typeof list, 'object', 'list is not an object');
   });
 
-  test('create a list', function() {
-    _.list([1, 2, 3]);
-    equal(1, 1, 'one doesn\'t equal one');
+  test('Create an empty list', function() {
+    var list = _.list([]);
+    strictEqual(list.struct, null, 'list is not null');
+  });
+
+  test('Find an element in a list', function() {
+    var list = _.list([1, 2, 3]);
+    var elem = list.find(1);
+    equal(elem, 1, 'could not find the right element in the list');
   });
 });
