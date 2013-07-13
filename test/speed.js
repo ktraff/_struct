@@ -1,9 +1,21 @@
 (function () {
+  // toggle speed testing by extending jslitmus tests
+  var runSpeedTests = false;
+  var test = function () {
+    if (runSpeedTests) { jslitmus.test.apply(jslitmus, arguments); }
+  };
 
-  jslitmus.test('mapping multiplication to 10,000 elements', function() {
-    var arr = [];
-    for (var i = 0; i < 5; i++) { arr.push(i); }
-    return _.map(arr, function(num) { return num * 3; });
+  var a10k = [];
+  for (var i = 0; i < 10000; i++) { a10k.push(i); }
+
+  var a10kList = _.list(a10k);
+
+  test('creating list of 10,000 elements', function() {
+    return _.list(a10k);
+  });
+
+  test('finding an element in list of 10,000', function() {
+    return a10kList.find(500);
   });
 
   // 'complete' fires for each test when it finishes.

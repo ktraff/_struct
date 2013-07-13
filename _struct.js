@@ -49,8 +49,8 @@
   var list = {
     VERSION: VERSION,
 
+    // Creates a new list object.
     initialize: function (arr) {
-      // TODO memoize the struct
       if (_.isArray(arr)) {
         this.struct = _.reduceRight(arr, this.cons, null, this);
       } else {
@@ -65,8 +65,9 @@
     },
 
     // A modified version of _.each made for traversing lists.
-    each: function (list, iterator, context) {
+    each: function (iterator, context) {
       var i = 0;
+      var list = this.struct;
       while (list !== null) {
         if (iterator.call(context, list.first, i++, list) === breaker) return;
         list = list.rest;
@@ -81,20 +82,26 @@
       };
     },
 
-    // A modified version of _.each made for traversing lists.
-    find: function (list, iterator, context) {
+    // Retrieves an element from the list, if it exists.  
+    find: function (obj, iterator, context) {
       var result;
-      iterator || (iterator = _.identity);
-      this.each(list, function (obj, idx, list) {
+      var list = this.struct;
+      // If no iterator is given, simply check equality with the given obj
+      iterator = iterator || function (val, idx, list) {
+        return obj == val;
+      };
+      this.each(function (obj, idx, list) {
         if (iterator.call(context, obj, idx, list)) {
           result = obj;
-          return true;
+          return breaker;
         }
       }, context);
       return result;
     },
 
-    isEmpty: _.isEmpty
+    isEmpty: function (arr) {
+      return this.struct === null;
+    }
   };
 
   var structs = {
