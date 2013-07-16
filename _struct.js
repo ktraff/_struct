@@ -31,7 +31,7 @@
     options = _.extend({
       // Define a filter function to remove unwanted or private struct attributes.
       filter: _.bind(function (prop) {
-        return !this.hasOwnProperty(prop) || prop[0] === '_';
+        return !this.hasOwnProperty(prop);
       }, this)
     }, options);
     var struct = {};
@@ -42,6 +42,12 @@
     return struct;
   };
 
+  // An internal function that returns true if the given object 
+  // represents an object, but not a function or array
+  var isStrictObject = function (obj) {
+    return _.isObject(obj) && !_.isFunction(obj) && !_.isArray(obj);
+  };
+
   var VERSION = '0.0.1';
 
   // Underscore List
@@ -49,19 +55,33 @@
   var list = {
     VERSION: VERSION,
 
-    // Creates a new list object.
-    initialize: function (arr) {
-      if (_.isArray(arr)) {
-        this.struct = _.reduceRight(arr, this.cons, null, this);
+    // Creates a new list object. Pass an array of elements, a valid list struct 
+    // object, or leave empty to initialize an empty list.
+    initialize: function (obj) {
+      if (_.isArray(obj)) {
+        this.struct = _.reduceRight(obj, this._cons, null, this);
+      } else if (isStrictObject(obj)) {
+        this.struct = obj;
       } else {
-        this.struct = this.cons(null, {});
+        this.struct = null;
       }
       return this;
     },
 
     // Constructs a list element by placing the obj at the head of the list.
-    cons: function (list, obj) {
+    _cons: function (list, obj) {
       return { first: obj, rest: list };
+    },
+
+    // Exports a list instance for use in an **Underscore.js** mixin.
+    _exports: function () {
+      return {
+        list: _.bind(function (obj) {
+          var listObj = exports.call(this);
+          listObj.initialize(obj);
+          return listObj;
+        }, this)
+      };
     },
 
     // A modified version of _.each made for traversing lists.
@@ -74,42 +94,49 @@
       }
     },
 
-    // Exports a list instance for use in an **Underscore.js** mixin.
-    exports: function () {
-      var listObj = exports.call(this);
-      return {
-        list: _.bind(listObj.initialize, listObj)
-      };
-    },
-
-    // Retrieves an element from the list, if it exists.  
-    find: function (obj, iterator, context) {
+    // Retrieves an element from the list, if it exists. Return 
+    // a new list with the found element, or an empty list if not found.
+    find: function (token, iterator, context) {
       var result;
       var list = this.struct;
-      // If no iterator is given, simply check equality with the given obj
-      iterator = iterator || function (val, idx, list) {
-        return obj == val;
+      // If no iterator is given, simply check equality with the given token.
+      iterator = iterator || function (token, obj, list) {
+        return token == obj;
       };
       this.each(function (obj, idx, list) {
-        if (iterator.call(context, obj, idx, list)) {
-          result = obj;
+        if (iterator.call(context, token, obj, list)) {
+          result = list;
           return breaker;
         }
       }, context);
-      return result;
+      return _.list(result);
     },
 
+    // Creates a new list, with the given obj inserted at the head of the list.
+    insert: function (obj) {
+      var struct = this._cons(this.struct, obj);
+      return _.list(struct);
+    },
+
+    // Returns true if the current element is empty, and
+    // there exist no pointers to other elements in the list.
     isEmpty: function (arr) {
       return this.struct === null;
+    },
+
+    // Returns the current element in the list.
+    val: function () {
+      return this.struct ? this.struct.first : this.struct;
     }
   };
 
   var structs = {
     list: list
   };
+
   // Add all struct objects to the Underscore library
   _.each(structs, function (struct, key) {
-    _.mixin(struct.exports());
+    _.mixin(struct._exports());
     nodeExports(key, struct);
   });
 
