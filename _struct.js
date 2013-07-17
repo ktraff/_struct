@@ -42,8 +42,15 @@
     return struct;
   };
 
+  // Used to mix in custom behavior to a struct.
+  var mixin = function (obj) {
+    _.each(_.functions(obj), function (name) {
+      this[name] = obj[name];
+    }, this);
+  };
+
   // An internal function that returns true if the given object 
-  // represents an object, but not a function or array
+  // represents an object, but not a function or array.
   var isStrictObject = function (obj) {
     return _.isObject(obj) && !_.isFunction(obj) && !_.isArray(obj);
   };
@@ -53,18 +60,18 @@
   // Underscore List
   // ---------------
   var list = {
+
     VERSION: VERSION,
 
     // Creates a new list object. Pass an array of elements, a valid list struct 
     // object, or leave empty to initialize an empty list.
     initialize: function (obj) {
-      if (_.isArray(obj)) {
+      if (_.isArray(obj))
         this.struct = _.reduceRight(obj, this._cons, null, this);
-      } else if (isStrictObject(obj)) {
+      else if (isStrictObject(obj))
         this.struct = obj;
-      } else {
+      else
         this.struct = null;
-      }
       return this;
     },
 
@@ -96,20 +103,25 @@
 
     // Retrieves an element from the list, if it exists. Return 
     // a new list with the found element, or an empty list if not found.
-    find: function (token, iterator, context) {
+    find: function (token, comparator, context) {
       var result;
       var list = this.struct;
-      // If no iterator is given, simply check equality with the given token.
-      iterator = iterator || function (token, obj, list) {
+      // If no comparator is given, simply check equality with the given token.
+      comparator = comparator || function (token, obj, list) {
         return token == obj;
       };
       this.each(function (obj, idx, list) {
-        if (iterator.call(context, token, obj, list)) {
+        if (comparator.call(context, token, obj, list)) {
           result = list;
           return breaker;
         }
       }, context);
       return _.list(result);
+    },
+
+    // Returns an empty list.
+    empty: function () {
+      return _.list();
     },
 
     // Creates a new list, with the given obj inserted at the head of the list.
@@ -124,10 +136,32 @@
       return this.struct === null;
     },
 
+    // Returns the length of the list.
+    length: function () {
+      var count = 0;
+      this.each(function (obj, idx, list) {
+        if (obj === null)
+          return breaker;
+        ++count;
+      });
+      return count;
+    },
+
+    mixin: function () {
+      mixin.apply(this, arguments);
+    },
+
+    // Returns a list whose head is next element in the list.
+    next: function () {
+      var struct = this.struct ? this.struct.rest : this.struct;
+      return _.list(struct);
+    },
+
     // Returns the current element in the list.
     val: function () {
       return this.struct ? this.struct.first : this.struct;
     }
+
   };
 
   var structs = {
