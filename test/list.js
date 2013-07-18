@@ -27,11 +27,11 @@ $(function () {
   test('Find an element in a list', function() {
     var list = _.list([1, 2, 3]);
     var found = list.find(1);
-    equal(found.val(), 1, '`1` was found in the list');
+    strictEqual(found.val(), 1, '`1` was found in the list');
     found = list.find(3);
-    equal(found.val(), 3, '`3` was found in the list');
+    strictEqual(found.val(), 3, '`3` was found in the list');
     found = list.find(2);
-    equal(found.val(), 2, '`2` was found in the list');
+    strictEqual(found.val(), 2, '`2` was found in the list');
     found = list.find(4);
     strictEqual(found.val(), null, '`4` was not found in the list');
     found = list.find({ elem: 'value' });
@@ -78,10 +78,19 @@ $(function () {
     _.list().mixin({
       addOne: function () {
         return this.insert(1);
+      },
+      addTwo: function () {
+        return this.insert(2);
       }
     });
     var list = _.list();
-    list.addOne();
-  })
+    list = list.addOne();
+    var found = list.find(1);
+    strictEqual(found.val(), 1, '`1` was found in the list');
+    list = _.list();
+    list = list.addTwo();
+    found = list.find(2);
+    strictEqual(found.val(), 2, '`2 was found in the list');
+  });
 
 });

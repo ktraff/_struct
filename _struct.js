@@ -26,26 +26,10 @@
     }
   };
 
-  // Exports attributes of a struct for use as an **Underscore** mixin.
-  var exports = function (options) {
-    options = _.extend({
-      // Define a filter function to remove unwanted or private struct attributes.
-      filter: _.bind(function (prop) {
-        return !this.hasOwnProperty(prop);
-      }, this)
-    }, options);
-    var struct = {};
-    for (var prop in this) {
-      if (options.filter(prop)) continue;
-      struct[prop] = this[prop];
-    }
-    return struct;
-  };
-
   // Used to mix in custom behavior to a struct.
-  var mixin = function (obj) {
+  var mixin = function (obj, proto) {
     _.each(_.functions(obj), function (name) {
-      this[name] = obj[name];
+      proto[name] = obj[name];
     }, this);
   };
 
@@ -55,55 +39,55 @@
     return _.isObject(obj) && !_.isFunction(obj) && !_.isArray(obj);
   };
 
+  // Define a container to keep track of all struct objects.
+  var structs = {};
+
   var VERSION = '0.0.1';
 
   // Underscore List
   // ---------------
-  var list = {
+  structs.list = function () {
 
-    VERSION: VERSION,
+    List.prototype.VERSION = VERSION;
 
     // Creates a new list object. Pass an array of elements, a valid list struct 
     // object, or leave empty to initialize an empty list.
-    initialize: function (obj) {
+    function List(obj) {
       if (_.isArray(obj))
         this.struct = _.reduceRight(obj, this._cons, null, this);
       else if (isStrictObject(obj))
         this.struct = obj;
       else
         this.struct = null;
-      return this;
-    },
+    }
 
     // Constructs a list element by placing the obj at the head of the list.
-    _cons: function (list, obj) {
+    List.prototype._cons = function (list, obj) {
       return { first: obj, rest: list };
-    },
+    };
 
     // Exports a list instance for use in an **Underscore.js** mixin.
-    _exports: function () {
+    List.prototype._exports = function () {
       return {
-        list: _.bind(function (obj) {
-          var listObj = exports.call(this);
-          listObj.initialize(obj);
-          return listObj;
-        }, this)
+        list: function (obj) {
+          return new List(obj);
+        }
       };
-    },
+    };
 
     // A modified version of _.each made for traversing lists.
-    each: function (iterator, context) {
+    List.prototype.each = function (iterator, context) {
       var i = 0;
       var list = this.struct;
       while (list !== null) {
         if (iterator.call(context, list.first, i++, list) === breaker) return;
         list = list.rest;
       }
-    },
+    };
 
     // Retrieves an element from the list, if it exists. Return 
     // a new list with the found element, or an empty list if not found.
-    find: function (token, comparator, context) {
+    List.prototype.find = function (token, comparator, context) {
       var result;
       var list = this.struct;
       // If no comparator is given, simply check equality with the given token.
@@ -117,27 +101,27 @@
         }
       }, context);
       return _.list(result);
-    },
+    };
 
     // Returns an empty list.
-    empty: function () {
+    List.prototype.empty = function () {
       return _.list();
-    },
+    };
 
     // Creates a new list, with the given obj inserted at the head of the list.
-    insert: function (obj) {
+    List.prototype.insert = function (obj) {
       var struct = this._cons(this.struct, obj);
       return _.list(struct);
-    },
+    };
 
     // Returns true if the current element is empty, and
     // there exist no pointers to other elements in the list.
-    isEmpty: function (arr) {
+    List.prototype.isEmpty = function (arr) {
       return this.struct === null;
-    },
+    };
 
     // Returns the length of the list.
-    length: function () {
+    List.prototype.length = function () {
       var count = 0;
       this.each(function (obj, idx, list) {
         if (obj === null)
@@ -145,32 +129,32 @@
         ++count;
       });
       return count;
-    },
+    };
 
-    mixin: function () {
-      mixin.apply(this, arguments);
-    },
+    List.prototype.mixin = function (obj) {
+      mixin.apply(this, [obj, List.prototype]);
+    };
 
     // Returns a list whose head is next element in the list.
-    next: function () {
+    List.prototype.next = function () {
       var struct = this.struct ? this.struct.rest : this.struct;
       return _.list(struct);
-    },
+    };
 
     // Returns the current element in the list.
-    val: function () {
+    List.prototype.val = function () {
       return this.struct ? this.struct.first : this.struct;
-    }
+    };
 
-  };
+    return List;
 
-  var structs = {
-    list: list
-  };
+  }();
 
   // Add all struct objects to the Underscore library
   _.each(structs, function (struct, key) {
-    _.mixin(struct._exports());
+    var test = new struct()._exports();
+    test.list();
+    _.mixin(test);
     nodeExports(key, struct);
   });
 
