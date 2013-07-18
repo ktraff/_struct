@@ -152,9 +152,7 @@
 
   // Add all struct objects to the Underscore library
   _.each(structs, function (struct, key) {
-    var test = new struct()._exports();
-    test.list();
-    _.mixin(test);
+    _.mixin(new struct()._exports());
     nodeExports(key, struct);
   });
 
