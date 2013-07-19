@@ -39,6 +39,17 @@
     return _.isObject(obj) && !_.isFunction(obj) && !_.isArray(obj);
   };
 
+  // Simple equality function that returns true if the token `==`
+  // the given obj.
+  var equals = function (token, obj) {
+    return token == obj;
+  };
+
+  // Strict form of equals function.
+  var strictEquals = function (token, obj) {
+    return token === obj;
+  };
+
   // Define a container to keep track of all struct objects.
   var structs = {};
 
@@ -90,10 +101,7 @@
     List.prototype.find = function (token, comparator, context) {
       var result;
       var list = this.struct;
-      // If no comparator is given, simply check equality with the given token.
-      comparator = comparator || function (token, obj, list) {
-        return token == obj;
-      };
+      comparator = comparator || equals;
       this.each(function (obj, idx, list) {
         if (comparator.call(context, token, obj, list)) {
           result = list;
@@ -131,6 +139,7 @@
       return count;
     };
 
+    // Add your own custom functions to every list object.
     List.prototype.mixin = function (obj) {
       mixin.apply(this, [obj, List.prototype]);
     };
@@ -140,6 +149,30 @@
       var struct = this.struct ? this.struct.rest : this.struct;
       return _.list(struct);
     };
+
+    // Returns a list with the given token removed. If no token
+    // is given, removes the current element. If no element could 
+    // be found, returns the original list.
+    List.prototype.remove = function (token, comparator, context) {
+      if (token === null || this.struct === null)
+        return this.next();
+      var result;
+      comparator = comparator || equals;
+      if (comparator.call(context, token, this.val()))
+        return this.next();
+      var struct = this._cons(null, this.struct.first);
+      var curr = struct;
+      this.next().each(function (obj, idx, list) {
+        if (comparator.call(context, token, obj, list)) {
+          curr.rest = list ? list.rest : list;
+          return breaker;
+        } else {
+          curr.rest = this._cons(null, obj);
+          curr = curr.rest;
+        }
+      }, this);
+      return _.list(struct);
+    },
 
     // Returns the current element in the list.
     List.prototype.val = function () {

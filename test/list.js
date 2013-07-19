@@ -1,5 +1,8 @@
 $(function () {
 
+  var a10 = [];
+  for (var i = 1; i < 11; i++) { a10.push(i); }
+
   module('List functions');
 
   test('Create a list', function() {
@@ -36,6 +39,9 @@ $(function () {
     strictEqual(found.val(), null, '`4` was not found in the list');
     found = list.find({ elem: 'value' });
     strictEqual(found.val(), null, '`{ elem: \'value\' }` was not found in the list');
+    list = _.list();
+    found = list.find(1);
+    strictEqual(found.val(), null, '`1` was not found in an empty list');
   });
 
   test('Insert elements into a list', function() {
@@ -67,6 +73,12 @@ $(function () {
     strictEqual(third.val(), null, 'null is the next element of the third list');
   });
 
+  test('Get the next element of an empty list', function () {
+    var list = _.list();
+    var next = list.next();
+    strictEqual(next.val(), null, 'next element of an empty list is null');
+  });
+
   test('Get the length of a list', function () {
     var list = _.list([1, 2, 3]);
     strictEqual(list.length(), 3, 'the list has three elements');
@@ -91,6 +103,27 @@ $(function () {
     list = list.addTwo();
     found = list.find(2);
     strictEqual(found.val(), 2, '`2 was found in the list');
+  });
+
+  test('Remove an element from a list', function () {
+    var list = _.list();
+    list = list.remove(1);
+    strictEqual(list.val(), null, 'removing element from empty list');
+    list = list.insert(2).insert(1);
+    var found = list.find(1);
+    strictEqual(found.val(), 1, '`1` was found in the list');
+    list = list.remove(1);
+    strictEqual(list.val(), 2, '`1` was removed in the list');
+    list = list.insert(1).remove(2);
+    strictEqual(list.val(), 1, '`2` was removed in the list');
+  });
+
+  test('Remove elements from a larger list', function () {
+    var list = _.list(a10).remove(5).remove(1).remove(7);
+    strictEqual(list.find(5).val(), null, '`5` was removed in the list');
+    strictEqual(list.find(7).val(), null, '`7` was removed in the list');
+    strictEqual(list.find(1).val(), null, '`1` was removed in the list');
+    strictEqual(list.find(2).val(), 2, '`2` was not removed in the list');
   });
 
 });
