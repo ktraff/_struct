@@ -55,8 +55,8 @@
 
   var VERSION = '0.0.1';
 
-  // Underscore List
-  // ---------------
+  // Underscore Linked List
+  // ----------------------
   structs.list = function () {
 
     List.prototype.VERSION = VERSION;
@@ -180,6 +180,29 @@
     };
 
     return List;
+
+  }();
+
+  // Underscore Zipper
+  // -----------------
+  structs.zipper = function () {
+
+    Zipper.prototype.VERSION = VERSION;
+
+    // Creates a new zipper object.
+    function Zipper(obj) {
+    }
+
+    // Exports a zipper instance for use in an **Underscore.js** mixin.
+    Zipper.prototype._exports = function () {
+      return {
+        zipper: function (obj) {
+          return new Zipper(obj);
+        }
+      };
+    };
+
+    return Zipper;
 
   }();
 
