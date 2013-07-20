@@ -191,6 +191,12 @@
 
     // Creates a new zipper object.
     function Zipper(obj) {
+      if (_.isArray(obj))
+        this.struct = _.reduceRight(obj, this._cons, null, this);
+      else if (isStrictObject(obj))
+        this.struct = obj;
+      else
+        this.struct = null;
     }
 
     // Exports a zipper instance for use in an **Underscore.js** mixin.
@@ -200,6 +206,38 @@
           return new Zipper(obj);
         }
       };
+    };
+
+    // Constructs a zipper element at the beginning of a zipper, which consists of:
+    // 1) A path back to the front of the zipper, 
+    // 2) The current element, and
+    // 3) The rest of the zipper.
+    Zipper.prototype._cons = function (zipper, obj) {
+      var elem = { path: null, curr: obj, rest: zipper };
+      if (zipper) zipper.path = elem;
+      return elem;
+    };
+
+    // Moves the cursor left.
+    Zipper.prototype.left = function () {
+      return _.zipper(this.struct.path);
+    },
+
+    // Add your own custom functions to every zipper object.
+    Zipper.prototype.mixin = function (obj) {
+      mixin.apply(this, [obj, Zipper.prototype]);
+    };
+
+    // Moves the cursor right.
+    Zipper.prototype.right = function () {
+      return _.zipper(this.struct.rest);
+    };
+
+    // returns the value of the current element in the zipper.
+    Zipper.prototype.val = function (value) {
+      if (!arguments.length)
+        return this.struct ? this.struct.curr : this.struct;
+      return _.zipper({ path: this.struct.path, curr: value, rest: this.struct.rest });
     };
 
     return Zipper;
