@@ -44,6 +44,15 @@ $(function () {
     strictEqual(found.val(), null, '`1` was not found in an empty list');
   });
 
+  test('Retrieve and update a list\'s value', function () {
+    var list = _.list(a10);
+    var mid = list.next(4);
+    strictEqual(mid.val(), 5, 'at the middle of the list');
+    var newMid = mid.val(5.5);
+    strictEqual(mid.val(), 5, '5 is still at the middle of the original list');
+    strictEqual(newMid.val(), 5.5, 'the middle of the new list is 5.5');
+  });
+
   test('Insert elements into a list', function() {
     var obj = { key: 'value' };
     var obj2 = { key: 'value2' };
@@ -71,6 +80,14 @@ $(function () {
     strictEqual(next.val(), 3, '3 is the next element of the next list');
     third = third.next();
     strictEqual(third.val(), null, 'null is the next element of the third list');
+  });
+
+  test('Get the next elements of the list, using arguments', function () {
+    var list = _.list(a10);
+    var next = list.next(4);
+    equal(next.val(), 5, 'moved four elements to the right');
+    var next = list.next(1);
+    equal(next.val(), 2, 'moved one element to the right');
   });
 
   test('Get the next element of an empty list', function () {

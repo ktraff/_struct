@@ -24,6 +24,17 @@ $(function () {
     strictEqual(zipper.right().val(), null, 'moved ' + count + ' spaces to reach the end of the list');
   });
 
+  test('Move the zipper around, multiple places at once', function () {
+    var zipper = _.zipper(a10);
+    strictEqual(zipper.left().val(), null, 'zipper is at the leftmost position');
+    strictEqual(zipper.left(4).val(), null, 'zipper is at the leftmost position');
+    strictEqual(zipper.right(0).val(), 2, 'moved zipper one place to the right. Even though I pass in zero, right() will still move right at least once');
+    strictEqual(zipper.right(1).val(), 2, 'moved zipper one place to the right');
+    strictEqual(zipper.right(4).val(), 5, 'moved zipper four places to the right');
+    strictEqual(zipper.right(9).val(), 10, 'moved zipper 9 places to the right');
+    strictEqual(zipper.right(10).val(), null, 'moved zipper 10 places to the right, past the end of the list');
+  });
+
   test('Retrieve and update a zipper\'s value', function () {
     var zipper = _.zipper(a10);
     var mid = zipper.right().right().right().right();

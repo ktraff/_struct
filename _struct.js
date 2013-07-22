@@ -144,9 +144,13 @@
       mixin.apply(this, [obj, List.prototype]);
     };
 
-    // Returns a list whose head is next element in the list.
-    List.prototype.next = function () {
-      var struct = this.struct ? this.struct.rest : this.struct;
+    // Returns a list whose head is next element in the list. If a 
+    // num is provided, moves num spaces forward in the list.
+    List.prototype.next = function (num) {
+      var struct = this.struct;
+      num = isNaN(num) ? 1 : Math.max(num, 1);
+      while (num-- > 0 && struct !== null)
+        struct = struct ? struct.rest : struct;
       return _.list(struct);
     };
 
@@ -174,9 +178,13 @@
       return _.list(struct);
     },
 
-    // Returns the current element in the list.
-    List.prototype.val = function () {
-      return this.struct ? this.struct.first : this.struct;
+
+    // Returns the value of the current element in the zipper. If a
+    // value is provided, update the value of the current element.
+    List.prototype.val = function (value) {
+      if (!arguments.length)
+        return this.struct ? this.struct.first : this.struct;
+      return _.list(this._cons(this.struct.rest, value));
     };
 
     return List;
@@ -218,9 +226,14 @@
       return elem;
     };
 
-    // Moves the cursor left.
-    Zipper.prototype.left = function () {
-      return _.zipper(this.struct.path);
+    // Moves the cursor left. If a num is provided, moves num places
+    // to the left of the cursor.
+    Zipper.prototype.left = function (num) {
+      var struct = this.struct;
+      num = isNaN(num) ? 1 : Math.max(num, 1);
+      while (num-- > 0 && struct !== null)
+        struct = struct ? struct.path : struct;
+      return _.zipper(struct);
     },
 
     // Add your own custom functions to every zipper object.
@@ -228,12 +241,18 @@
       mixin.apply(this, [obj, Zipper.prototype]);
     };
 
-    // Moves the cursor right.
-    Zipper.prototype.right = function () {
-      return _.zipper(this.struct.rest);
+    // Moves the cursor right. If a num is provided, moves num places
+    // to the right of the cursor.
+    Zipper.prototype.right = function (num) {
+      var struct = this.struct;
+      num = isNaN(num) ? 1 : Math.max(num, 1);
+      while (num-- > 0 && struct !== null)
+        struct = struct ? struct.rest : struct;
+      return _.zipper(struct);
     };
 
-    // returns the value of the current element in the zipper.
+    // Returns the value of the current element in the zipper. If a
+    // value is provided, update the value of the current element.
     Zipper.prototype.val = function (value) {
       if (!arguments.length)
         return this.struct ? this.struct.curr : this.struct;
@@ -244,7 +263,7 @@
 
   }();
 
-  // Add all struct objects to the Underscore library
+  // Add all struct objects to the Underscore library.
   _.each(structs, function (struct, key) {
     _.mixin(new struct()._exports());
     nodeExports(key, struct);
