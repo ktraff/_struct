@@ -68,6 +68,9 @@ $(function () {
     newList = newList.insert(obj2);
     found = newList.find(obj2, comparator);
     equal(found.val(), obj2, '`obj2` was found in the new list');
+
+    list = _.list().val(1);
+    equal(list.val(), 1, 'inserted `1` into an empty list using val()');
   });
 
   test('Get the next element of the list', function () {

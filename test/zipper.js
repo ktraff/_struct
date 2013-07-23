@@ -42,6 +42,10 @@ $(function () {
     var newMid = mid.val(5.5);
     strictEqual(mid.val(), 5, '5 is still at the middle of the original zipper');
     strictEqual(newMid.val(), 5.5, 'the middle of the new list is 5.5');
+
+    var z2 = _.zipper();
+    z2 = z2.val(1);
+    strictEqual(z2.val(), 1, 'inserted 1 into an empty list');
   });
 
 });

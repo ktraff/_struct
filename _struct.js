@@ -184,7 +184,8 @@
     List.prototype.val = function (value) {
       if (!arguments.length)
         return this.struct ? this.struct.first : this.struct;
-      return _.list(this._cons(this.struct.rest, value));
+      var struct = _.extend({ rest: null }, this.struct, { first: value });
+      return _.list(struct);
     };
 
     return List;
@@ -200,12 +201,24 @@
     // Creates a new zipper object.
     function Zipper(obj) {
       if (_.isArray(obj))
-        this.struct = _.reduceRight(obj, this._cons, null, this);
+        this.struct = _.reduceRight(obj, function (zipper, obj, idx, arr) {
+          return this._cons(zipper, obj, null);
+        }, null, this);
       else if (isStrictObject(obj))
         this.struct = obj;
       else
         this.struct = null;
     }
+
+    // Constructs a zipper element at the beginning of a zipper, which consists of:
+    // 1) A path back to the front of the zipper, 
+    // 2) The current element, and
+    // 3) The rest of the zipper.
+    Zipper.prototype._cons = function (zipper, obj, path) {
+      var elem = { path: path || null, curr: obj, rest: zipper };
+      if (zipper) zipper.path = elem;
+      return elem;
+    };
 
     // Exports a zipper instance for use in an **Underscore.js** mixin.
     Zipper.prototype._exports = function () {
@@ -216,15 +229,10 @@
       };
     };
 
-    // Constructs a zipper element at the beginning of a zipper, which consists of:
-    // 1) A path back to the front of the zipper, 
-    // 2) The current element, and
-    // 3) The rest of the zipper.
-    Zipper.prototype._cons = function (zipper, obj) {
-      var elem = { path: null, curr: obj, rest: zipper };
-      if (zipper) zipper.path = elem;
-      return elem;
-    };
+    // Inserts an element directly left of the current element.
+    Zipper.prototype.insertLeft = function (obj) {
+      var struct = this._cons(this.struct);
+    },
 
     // Moves the cursor left. If a num is provided, moves num places
     // to the left of the cursor.
@@ -256,7 +264,8 @@
     Zipper.prototype.val = function (value) {
       if (!arguments.length)
         return this.struct ? this.struct.curr : this.struct;
-      return _.zipper({ path: this.struct.path, curr: value, rest: this.struct.rest });
+      var struct = _.extend({ path: null, rest: null }, this.struct, { curr: value });
+      return _.zipper(struct);
     };
 
     return Zipper;
