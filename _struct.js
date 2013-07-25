@@ -116,6 +116,15 @@
       return _.list();
     };
 
+    // Wraps subsequent functions with an assignment to this.  Used mainly
+    // as a convenience function to prevent the need to always assign the
+    // result of a function to the caller.
+    List.prototype.inPlace = function () {
+      return _.bind(function () {
+        
+      }, this);
+    },
+
     // Creates a new list, with the given obj inserted at the head of the list.
     List.prototype.insert = function (obj) {
       var struct = this._cons(this.struct, obj);
@@ -249,6 +258,26 @@
       mixin.apply(this, [obj, Zipper.prototype]);
     };
 
+    // Removes the current element from the zipper. If a path to the element
+    // exists, points the path to the rest of the zipper.  If no elements 
+    // exist after the current elem, points the current element to the previous
+    // element in the path.
+    Zipper.prototype.remove = function (obj) {
+      var struct = this._cons(null, null);
+      if (this.struct) {
+        if (this.struct.path)
+          struct.path = this.struct.path;
+        if (this.struct.rest) {
+          struct.curr = this.struct.rest.curr;
+          struct.rest = this.struct.rest.rest;
+        } else if (this.struct.path) {
+          struct.path = this.struct.path.path;
+          struct.curr = this.struct.path.curr;
+        }
+      }
+      return _.zipper(struct);
+    },
+
     // Moves the cursor right. If a num is provided, moves num places
     // to the right of the cursor.
     Zipper.prototype.right = function (num) {
@@ -272,10 +301,17 @@
 
   }();
 
-  // Add all struct objects to the Underscore library.
-  _.each(structs, function (struct, key) {
-    _.mixin(new struct()._exports());
-    nodeExports(key, struct);
+  // Mix-in a function to mix-in a hash of structs to the **Underscore.js** library.
+  // This can be used to add your own custom structs to the library.
+  _.mixin({
+    struct: function (structs) {
+      _.each(structs, function (struct, key) {
+        _.mixin(new struct()._exports());
+      });
+    }
   });
+
+  // Add all struct objects to the Underscore library.
+  _.struct(structs);
 
 }).call(this);

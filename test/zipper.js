@@ -46,6 +46,21 @@ $(function () {
     var z2 = _.zipper();
     z2 = z2.val(1);
     strictEqual(z2.val(), 1, 'inserted 1 into an empty list');
+    z2 = z2.remove(1).val(2);
+    strictEqual(z2.val(), 2, 'inserted 2 into an empty list');
+  });
+
+  test('Remove values from a zipper', function () {
+    var zipper = _.zipper(a10);
+    var mid = zipper.right(4);
+    strictEqual(mid.val(), 5, 'moved to the middle of the zipper');
+    strictEqual(mid.remove().val(), 6, 'removed 5 from the zipper');
+    strictEqual(zipper.remove().val(), 2, 'removed 1 from the zipper');
+    strictEqual(zipper.left().remove().val(), null, 'attempted to remove a null element from the zipper');
+    var end = zipper.right(9);
+    strictEqual(end.val(), 10, 'moved to the end of the zipper');
+    strictEqual(end.remove().val(), 9, 'removed the last element from the zipper');
+    strictEqual(end.right().remove().val(), null, 'attempted to remove a null element from the zipper');
   });
 
 });

@@ -73,6 +73,15 @@ $(function () {
     equal(list.val(), 1, 'inserted `1` into an empty list using val()');
   });
 
+  test('Insert elements into a list, using val()', function() {
+    var list = _.list();
+    list = list.val(1);
+    strictEqual(list.val(), 1, 'inserted `1` into an empty list using val()');
+
+    list = list.remove(1).val(2);
+    strictEqual(list.val(), 2, 'inserted `2` into an empty list using val()');
+  });
+
   test('Get the next element of the list', function () {
     var list = _.list([1, 2, 3]);
     var next = list.next();
