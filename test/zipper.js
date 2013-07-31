@@ -63,4 +63,27 @@ $(function () {
     strictEqual(end.right().remove().val(), null, 'attempted to remove a null element from the zipper');
   });
 
+  test('Insert a value to the left of the current zipper element', function () {
+    var zipper = _.zipper(a10);
+    var mid = zipper.right(4).remove();
+    strictEqual(mid.val(), 6, 'removed middle element of the zipper');
+    mid = mid.insertLeft(5);
+    strictEqual(mid.val(), 5, 're-inserted 5 to the middle of the list');
+    zipper = zipper.insertLeft(0);
+    strictEqual(zipper.val(), 0, 'inserted zero at the beginning of the list');
+  });
+
+  test('Insert a value to the right of the current zipper element', function () {
+    var zipper = _.zipper(a10);
+    var mid = zipper.right(4).remove();
+    strictEqual(mid.val(), 6, 'removed middle element of the zipper');
+    mid = mid.left();
+    strictEqual(mid.val(), 4, 'moved to the left, 5 has been removed');
+    mid = mid.insertRight(5);
+    strictEqual(mid.val(), 5, 're-inserted 5 to the middle of the list');
+    var end = zipper.right(9);
+    end = end.insertRight(11);
+    strictEqual(end.val(), 11, 'inserted 11 at the end of the list');
+  });
+
 });

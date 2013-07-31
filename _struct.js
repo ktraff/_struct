@@ -116,15 +116,6 @@
       return _.list();
     };
 
-    // Wraps subsequent functions with an assignment to this.  Used mainly
-    // as a convenience function to prevent the need to always assign the
-    // result of a function to the caller.
-    List.prototype.inPlace = function () {
-      return _.bind(function () {
-        
-      }, this);
-    },
-
     // Creates a new list, with the given obj inserted at the head of the list.
     List.prototype.insert = function (obj) {
       var struct = this._cons(this.struct, obj);
@@ -240,7 +231,18 @@
 
     // Inserts an element directly left of the current element.
     Zipper.prototype.insertLeft = function (obj) {
-      var struct = this._cons(this.struct);
+      var struct = this._cons(this.struct, obj, this.struct ? this.struct.path : this.struct);
+      return _.zipper(struct);
+    },
+
+    // Inserts an element directly right of the current element.
+    Zipper.prototype.insertRight = function (obj) {
+      var struct;
+      if (this.struct.rest)
+        struct = this._cons(this.struct.rest.rest, obj, this.struct);
+      else
+        struct = this._cons(null, obj, this.struct);
+      return _.zipper(struct);
     },
 
     // Moves the cursor left. If a num is provided, moves num places
@@ -265,11 +267,14 @@
     Zipper.prototype.remove = function (obj) {
       var struct = this._cons(null, null);
       if (this.struct) {
-        if (this.struct.path)
-          struct.path = this.struct.path;
+        if (this.struct.path) {
+          struct.path = this._cons(struct, this.struct.path.curr, this.struct.path.path);
+          struct.path.rest = struct;
+        }
         if (this.struct.rest) {
           struct.curr = this.struct.rest.curr;
-          struct.rest = this.struct.rest.rest;
+          struct.rest = this._cons(this.struct.rest.rest, this.struct.rest.curr, struct);
+          struct.rest.path = struct;
         } else if (this.struct.path) {
           struct.path = this.struct.path.path;
           struct.curr = this.struct.path.curr;
