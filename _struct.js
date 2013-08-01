@@ -231,7 +231,7 @@
 
     // Inserts an element directly left of the current element.
     Zipper.prototype.insertLeft = function (obj) {
-      var struct = this._cons(this.struct, obj, this.struct ? this.struct.path : this.struct);
+      var struct = { path: this.struct ? this.struct.path : this.struct, curr: obj, rest: this.struct };
       return _.zipper(struct);
     },
 
@@ -239,9 +239,9 @@
     Zipper.prototype.insertRight = function (obj) {
       var struct;
       if (this.struct.rest)
-        struct = this._cons(this.struct.rest.rest, obj, this.struct);
+        struct = { path: this.struct, curr: obj, rest: this.struct.rest.rest };
       else
-        struct = this._cons(null, obj, this.struct);
+        struct = { path: this.struct, curr: obj, rest: null };
       return _.zipper(struct);
     },
 
@@ -306,6 +306,40 @@
 
   }();
 
+  // Underscore Monad
+  // ----------------
+  // Monads provide a way to nest functions of a similar kind in the same container,
+  // acting as a functional pipeline, where data can be processed in steps. They
+  // require a type constructor, as well as a `bind()` and `pipeline()` operation.
+  structs.monad = function () {
+
+    Monad.prototype.VERSION = VERSION;
+
+    // Creates a monad object.
+    function Monad(_cons, bind, pipeline) {
+      this._cons = _cons;
+      this.bind = bind;
+      this.pipeline = pipeline;
+    }
+
+    // Exports a monad instance for use in an **Underscore.js** mixin.
+    Monad.prototype._exports = function () {
+      return {
+        monad: function (_cons, bind, pipeline) {
+          return new Monad(_cons, bind, pipeline);
+        }
+      };
+    };
+
+    // Runs a pipeline of functions defined by the Monad constructor.
+    Monad.prototype.process = function (obj, fns) {
+      return this.pipeline(this._cons(obj), fns);
+    };
+
+    return Monad;
+
+  }();
+
   // Mix-in a function to mix-in a hash of structs to the **Underscore.js** library.
   // This can be used to add your own custom structs to the library.
   _.mixin({
@@ -316,7 +350,7 @@
     }
   });
 
-  // Add all struct objects to the Underscore library.
+  // Add all struct objects to the **Underscore.js** library.
   _.struct(structs);
 
 }).call(this);

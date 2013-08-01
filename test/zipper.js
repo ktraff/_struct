@@ -69,8 +69,10 @@ $(function () {
     strictEqual(mid.val(), 6, 'removed middle element of the zipper');
     mid = mid.insertLeft(5);
     strictEqual(mid.val(), 5, 're-inserted 5 to the middle of the list');
-    zipper = zipper.insertLeft(0);
-    strictEqual(zipper.val(), 0, 'inserted zero at the beginning of the list');
+    var newZipper = zipper.insertLeft(0);
+    strictEqual(zipper.val(), 1, 'zipper is still at one');
+    strictEqual(zipper.left().val(), null, 'zipper is still unchanged');
+    strictEqual(newZipper.val(), 0, 'inserted zero at the beginning of the list');
   });
 
   test('Insert a value to the right of the current zipper element', function () {
@@ -82,8 +84,10 @@ $(function () {
     mid = mid.insertRight(5);
     strictEqual(mid.val(), 5, 're-inserted 5 to the middle of the list');
     var end = zipper.right(9);
-    end = end.insertRight(11);
-    strictEqual(end.val(), 11, 'inserted 11 at the end of the list');
+    var newEnd = end.insertRight(11);
+    strictEqual(end.val(), 10, '10 still lies at the end of the list');
+    strictEqual(end.right().val(), null, 'end list is unchanged');
+    strictEqual(newEnd.val(), 11, '11 added to the end of the list');
   });
 
 });
