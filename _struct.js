@@ -229,6 +229,24 @@
       };
     };
 
+    // Moves to the first element of the zipper.
+    Zipper.prototype.head  = function () {
+      var struct = this.struct;
+      while (struct !== null && struct.path !== null)
+        struct = struct.path;
+      return _.zipper(struct);
+    };
+
+    // Returns the zipper with the last element removed.
+    Zipper.prototype.init = function () {
+        var head = this.head();
+        var struct = head.struct;
+        while (struct !== null && struct.rest !== null)
+          struct = struct.rest;
+        if (struct && struct.path) struct.path.rest = null;
+        return _.zipper(head.struct);
+    };
+
     // Inserts an element directly left of the current element.
     Zipper.prototype.insertLeft = function (obj) {
       var struct = { path: this.struct ? this.struct.path : this.struct, curr: obj, rest: this.struct };
@@ -244,6 +262,14 @@
         struct = { path: this.struct, curr: obj, rest: null };
       return _.zipper(struct);
     },
+
+    // Moves to the last element of the zipper.
+    Zipper.prototype.last  = function () {
+      var struct = this.struct;
+      while (struct !== null && struct.rest !== null)
+        struct = struct.rest;
+      return _.zipper(struct);
+    };
 
     // Moves the cursor left. If a num is provided, moves num places
     // to the left of the cursor.
@@ -291,6 +317,12 @@
       while (num-- > 0 && struct !== null)
         struct = struct ? struct.rest : struct;
       return _.zipper(struct);
+    };
+
+    // Returns the tail of the zipper, which includes all elements except
+    // the first element in the zipper.
+    Zipper.prototype.tail = function () {
+        return _.zipper(this.head().right().struct);
     };
 
     // Returns the value of the current element in the zipper. If a

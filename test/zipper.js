@@ -35,6 +35,44 @@ $(function () {
     strictEqual(zipper.right(10).val(), null, 'moved zipper 10 places to the right, past the end of the list');
   });
 
+  test('Move to the head of the zipper', function () {
+      var zipper = _.zipper(a10);
+      var z2 = zipper.right(6);
+      strictEqual(z2.val(), 7, 'moved to the 7th position in the zipper');
+      strictEqual(z2.head().val(), 1, 'moved to the head of the zipper');
+
+      zipper = _.zipper();
+      strictEqual(zipper.head().val(), null, 'moved to the head of an empty zipper');
+  });
+
+  test('Retrieve the tail of a zipper', function () {
+      var zipper = _.zipper(a10);
+      var tail = zipper.tail();
+      strictEqual(tail.val(), 2, 'moved to the next element in the zipper');
+
+      zipper = _.zipper();
+      strictEqual(zipper.tail().val(), null, 'retrieved the tail of an empty zipper');
+  });
+
+  test('Retrieve all but the last element of a zipper', function () {
+      var zipper = _.zipper(a10);
+      var init = zipper.init();
+      strictEqual(init.last().val(), 9, 'removed the last element in the zipper');
+
+      zipper = _.zipper();
+      strictEqual(zipper.init().last().val(), null, 'retrieved all but the last element of an empty zipper');
+  });
+
+  test('Move to the last element of the zipper', function () {
+      var zipper = _.zipper(a10);
+      var z2 = zipper.right(6);
+      strictEqual(z2.val(), 7, 'moved to the 7th position in the zipper');
+      strictEqual(z2.last().val(), 10, 'moved to the last element of the zipper');
+
+      zipper = _.zipper();
+      strictEqual(zipper.last().val(), null, 'retrieved the last element of an empty zipper');
+  });
+
   test('Retrieve and update a zipper\'s value', function () {
     var zipper = _.zipper(a10);
     var mid = zipper.right().right().right().right();
