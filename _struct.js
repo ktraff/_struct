@@ -372,6 +372,23 @@
 
   }();
 
+  // The `dequelette` below is basically a limited kind of deque, in which there can
+  // only store one, two, three or four items.  It is used to build a `deque` that
+  // will serve as the structure underlying a finger tree.
+  var fdequelette = function () {
+      
+  }();
+
+  // The `deque` below is based on an (article by Eric Lippert)[http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx]
+  // and is used by a finger tree as a base structure upon which the tree is built.
+  // It can be one of three things:
+  // - empty
+  // - a single element of a particular type T
+  // - a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
+  var fdeque = function () {
+
+  }();
+
   // Underscore Finger Tree
   // ----------------------
   // A finger tree is essentially the swiss army knife of functional data structures.

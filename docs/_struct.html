@@ -611,6 +611,48 @@ value is provided, update the value of the current element.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
+              <p>Moves to the first element of the zipper.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Zipper.prototype.head  = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">var</span> struct = <span class="keyword">this</span>.struct;
+      <span class="keyword">while</span> (struct !== <span class="literal">null</span> &amp;&amp; struct.path !== <span class="literal">null</span>)
+        struct = struct.path;
+      <span class="keyword">return</span> _.zipper(struct);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Returns the zipper with the last element removed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Zipper.prototype.init = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">var</span> head = <span class="keyword">this</span>.head();
+        <span class="keyword">var</span> struct = head.struct;
+        <span class="keyword">while</span> (struct !== <span class="literal">null</span> &amp;&amp; struct.rest !== <span class="literal">null</span>)
+          struct = struct.rest;
+        <span class="keyword">if</span> (struct &amp;&amp; struct.path) struct.path.rest = <span class="literal">null</span>;
+        <span class="keyword">return</span> _.zipper(head.struct);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
               <p>Inserts an element directly left of the current element.</p>
 
             </div>
@@ -623,11 +665,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Inserts an element directly right of the current element.</p>
 
@@ -645,11 +687,31 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Moves to the last element of the zipper.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Zipper.prototype.last  = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">var</span> struct = <span class="keyword">this</span>.struct;
+      <span class="keyword">while</span> (struct !== <span class="literal">null</span> &amp;&amp; struct.rest !== <span class="literal">null</span>)
+        struct = struct.rest;
+      <span class="keyword">return</span> _.zipper(struct);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Moves the cursor left. If a num is provided, moves num places
 to the left of the cursor.</p>
@@ -667,11 +729,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Add your own custom functions to every zipper object.</p>
 
@@ -684,11 +746,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Removes the current element from the zipper. If a path to the element
 exists, points the path to the rest of the zipper.  If no elements 
@@ -719,11 +781,11 @@ element in the path.</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Moves the cursor right. If a num is provided, moves num places
 to the right of the cursor.</p>
@@ -741,11 +803,29 @@ to the right of the cursor.</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Returns the tail of the zipper, which includes all elements except
+the first element in the zipper.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Zipper.prototype.tail = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> _.zipper(<span class="keyword">this</span>.head().right().struct);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Returns the value of the current element in the zipper. If a
 value is provided, update the value of the current element.</p>
@@ -766,11 +846,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <h2>Underscore Monad</h2>
 
@@ -779,11 +859,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Monads provide a way to nest functions of a similar kind in the same container,
 acting as a functional pipeline, where data can be processed in steps. They
@@ -798,11 +878,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-40">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Creates a monad object.</p>
 
@@ -817,11 +897,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-41">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Exports a monad instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -838,11 +918,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-42">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Runs a pipeline of functions defined by the Monad constructor.</p>
 
@@ -859,11 +939,126 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-43">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>The <code>dequelette</code> below is basically a limited kind of deque, in which there can
+only store one, two, three or four items.  It is used to build a <code>deque</code> that
+will serve as the structure underlying a finger tree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> fdequelette = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>The <code>deque</code> below is based on an (article by Eric Lippert)[<a href="http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx">http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx</a>]
+and is used by a finger tree as a base structure upon which the tree is built.
+It can be one of three things:
+- empty
+- a single element of a particular type T
+- a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> fdeque = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <h2>Underscore Finger Tree</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>A finger tree is essentially the swiss army knife of functional data structures.
+It provides a general-purpose simple and efficient way for &quot;accessing and removing elements 
+at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
+satisfying some criterion, and splitting the sequence into subsequences based on some property.&quot;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  structs.fingertree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+    FingerTree.prototype.VERSION = VERSION;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>Creates a finger tree object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">FingerTree</span><span class="params">()</span> {</span>
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Exports a finger tree instance for use in an <strong>Underscore.js</strong> mixin.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    FingerTree.prototype._exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> {
+        fingertree: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+          <span class="keyword">return</span> <span class="keyword">new</span> FingerTree();
+        }
+      };
+    };
+
+    <span class="keyword">return</span> FingerTree;
+
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Mix-in a function to mix-in a hash of structs to the <strong>Underscore.js</strong> library.
 This can be used to add your own custom structs to the library.</p>
@@ -881,11 +1076,11 @@ This can be used to add your own custom structs to the library.</p>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Add all struct objects to the <strong>Underscore.js</strong> library.</p>
 
