@@ -372,6 +372,33 @@
 
   }();
 
+  // Underscore Finger Tree
+  // ----------------------
+  // A finger tree is essentially the swiss army knife of functional data structures.
+  // It provides a general-purpose simple and efficient way for "accessing and removing elements 
+  // at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
+  // satisfying some criterion, and splitting the sequence into subsequences based on some property."
+  structs.fingertree = function () {
+
+    FingerTree.prototype.VERSION = VERSION;
+
+    // Creates a finger tree object.
+    function FingerTree() {
+    }
+
+    // Exports a finger tree instance for use in an **Underscore.js** mixin.
+    FingerTree.prototype._exports = function () {
+      return {
+        fingertree: function () {
+          return new FingerTree();
+        }
+      };
+    };
+
+    return FingerTree;
+
+  }();
+
   // Mix-in a function to mix-in a hash of structs to the **Underscore.js** library.
   // This can be used to add your own custom structs to the library.
   _.mixin({
