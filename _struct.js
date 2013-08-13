@@ -379,7 +379,7 @@
       
   }();
 
-  // The `deque` below is based on an (article by Eric Lippert)[http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx]
+  // The `deque` below is based on an [article by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx)
   // and is used by a finger tree as a base structure upon which the tree is built.
   // It can be one of three things:
   // - empty
