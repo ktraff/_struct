@@ -14,6 +14,26 @@
   // Establish the object that gets returned to break out of a loop iteration.
   var breaker = {};
 
+  // Create a safe reference to the Underscore object for use below.
+  var _struct = function(obj) {
+    if (obj instanceof _struct) return obj;
+    if (!(this instanceof _struct)) return new _struct(obj);
+    this._wrapped = obj;
+  };
+
+  // Export the Underscore _struct object for **Node.js**, with
+  // backwards-compatibility for the old `require()` API. If we're in
+  // the browser, add `_struct` as a global object via a string identifier,
+  // for Closure Compiler "advanced" mode.
+  if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+      exports = module.exports = _struct;
+    }
+    exports._struct = _struct;
+  } else {
+    root._struct = _struct;
+  }
+
   // Defining helper functions.
 
   // Export a module for **Node.js**.
@@ -57,7 +77,7 @@
 
   // Underscore Linked List
   // ----------------------
-  structs.list = function () {
+  structs.list = _struct.list = function () {
 
     List.prototype.VERSION = VERSION;
 
@@ -194,7 +214,7 @@
 
   // Underscore Zipper
   // -----------------
-  structs.zipper = function () {
+  structs.zipper = _struct.zipper = function () {
 
     Zipper.prototype.VERSION = VERSION;
 
@@ -343,7 +363,7 @@
   // Monads provide a way to nest functions of a similar kind in the same container,
   // acting as a functional pipeline, where data can be processed in steps. They
   // require a type constructor, as well as a `bind()` and `pipeline()` operation.
-  structs.monad = function () {
+  structs.monad = _struct.monad = function () {
 
     Monad.prototype.VERSION = VERSION;
 
@@ -372,11 +392,223 @@
 
   }();
 
-  // The `dequelette` below is basically a limited kind of deque, in which there can
+  // The dequelette below is basically a limited kind of deque, in which there can
   // only store one, two, three or four items.  It is used to build a `deque` that
   // will serve as the structure underlying a finger tree.
-  var fdequelette = function () {
-      
+  _struct.fdequelette = function () {
+
+    Dequelette.prototype.VERSION = VERSION;
+
+    // The constructor creates a Dequelette of a specific type depending on 
+    // the number of elements provided. A single-element array creates a `One`
+    // dequelette, two-element array creates a `Two` dequelette, etc...
+    function Dequelette(arr) {
+      if (_.isArray(arr) && arr.length > 1) {
+        if (arr.length === 1)
+          return new One(arr);
+        else if (arr.length === 2)
+          return new Two(arr[0], arr[1]);
+        else if (arr.length === 3)
+          return new Three(arr[0], arr[1], arr[2]);
+        else if (arr.length === 4)
+          return new Four(arr[0], arr[1], arr[2], arr[3]);
+      }
+      else if (arr) {
+        return new One(arr);
+      }
+    }
+
+    // A dequelette with one object.
+    var One = function () {
+
+      SingleDequelette.prototype.VERSION = VERSION;
+
+      SingleDequelette.prototype.TYPE = 'one';
+
+      function SingleDequelette(obj) {
+        this.struct = [obj];
+      }
+
+      SingleDequelette.prototype.size = function () {
+        return 1;
+      };
+
+      SingleDequelette.prototype.peekLeft =
+      SingleDequelette.prototype.peekRight = function () {
+        return this.val();
+      };
+
+      SingleDequelette.prototype.insertLeft = function (obj) {
+        return new Two(obj, this.struct);
+      };
+
+      SingleDequelette.prototype.insertRight = function (obj) {
+        return new Two(this.struct, obj);
+      };
+
+      // This should never happen.
+      SingleDequelette.prototype.removeLeft = function () {
+        return this;
+      };
+
+      // This should never happen.
+      SingleDequelette.prototype.removeRight = function () {
+        return this;
+      };
+
+      SingleDequelette.prototype.val = function () {
+        return this.struct[0];
+      };
+
+      return SingleDequelette;
+
+    }();
+
+    // A dequelette with two objects.
+    var Two = function () {
+
+      DoubleDequelette.prototype.VERSION = VERSION;
+
+      DoubleDequelette.prototype.TYPE = 'two';
+
+      function DoubleDequelette(obj1, obj2) {
+        this.struct = [obj1, obj2];
+      }
+
+      DoubleDequelette.prototype.size = function () {
+        return 2;
+      };
+
+      DoubleDequelette.prototype.peekLeft = function () {
+        return this.struct[0];
+      };
+
+      DoubleDequelette.prototype.peekRight = function () {
+        return this.struct[1];
+      };
+
+      DoubleDequelette.prototype.insertLeft = function (obj) {
+        return new Three(obj, this.struct[0], this.struct[1]);
+      };
+
+      DoubleDequelette.prototype.insertRight = function (obj) {
+        return new Three(this.struct[0], this.struct[1], obj);
+      };
+
+      DoubleDequelette.prototype.removeLeft = function () {
+        return new One(this.struct[1]);
+      };
+
+      DoubleDequelette.prototype.removeRight = function () {
+        return new One(this.struct[0]);
+      };
+
+      DoubleDequelette.prototype.val = function () {
+        return this.struct;
+      };
+
+      return DoubleDequelette;
+
+    }();
+
+    // A dequelette with three objects.
+    var Three = function () {
+
+      TripleDequelette.prototype.VERSION = VERSION;
+
+      TripleDequelette.prototype.TYPE = 'three';
+
+      function TripleDequelette(obj1, obj2, obj3) {
+        this.struct = [obj1, obj2, obj3];
+      }
+
+      TripleDequelette.prototype.size = function () {
+        return 3;
+      };
+
+      TripleDequelette.prototype.peekLeft = function () {
+        return this.struct[0];
+      };
+
+      TripleDequelette.prototype.peekRight = function () {
+        return this.struct[2];
+      };
+
+      TripleDequelette.prototype.insertLeft = function (obj) {
+        return new Four(obj, this.struct[0], this.struct[1], this.struct[2]);
+      };
+
+      TripleDequelette.prototype.insertRight = function (obj) {
+        return new Four(this.struct[0], this.struct[1], this.struct[2], obj);
+      };
+
+      TripleDequelette.prototype.removeLeft = function () {
+        return new Two(this.struct[1], this.struct[2]);
+      };
+
+      TripleDequelette.prototype.removeRight = function () {
+        return new Two(this.struct[0], this.struct[1]);
+      };
+
+      TripleDequelette.prototype.val = function () {
+        return this.struct;
+      };
+
+      return TripleDequelette;
+
+    }();
+
+    // A dequelette with four objects.
+    var Four = function () {
+
+      QuatrupleDequelette.prototype.VERSION = VERSION;
+
+      QuatrupleDequelette.prototype.TYPE = 'four';
+
+      function QuatrupleDequelette(obj1, obj2, obj3, obj4) {
+        this.struct = [obj1, obj2, obj3, obj4];
+      }
+
+      QuatrupleDequelette.prototype.size = function () {
+        return 4;
+      };
+
+      QuatrupleDequelette.prototype.peekLeft = function () {
+        return this.struct[0];
+      };
+
+      QuatrupleDequelette.prototype.peekRight = function () {
+        return this.struct[3];
+      };
+
+      // This should never happen.
+      QuatrupleDequelette.prototype.insertLeft = function (obj) {
+        return this;
+      };
+
+      // This should never happen.
+      QuatrupleDequelette.prototype.insertRight = function (obj) {
+        return this;
+      };
+
+      QuatrupleDequelette.prototype.removeLeft = function () {
+        return new Three(this.struct[1], this.struct[2], this.struct[3]);
+      };
+
+      QuatrupleDequelette.prototype.removeRight = function () {
+        return new Three(this.struct[0], this.struct[1], this.struct[2]);
+      };
+
+      QuatrupleDequelette.prototype.val = function () {
+        return this.struct;
+      };
+
+      return QuatrupleDequelette;
+
+    }();
+
+    return Dequelette;
+
   }();
 
   // The `deque` below is based on an [article by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx)
@@ -385,7 +617,7 @@
   // - empty
   // - a single element of a particular type T
   // - a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
-  var fdeque = function () {
+  _struct.fdeque = function () {
 
   }();
 
@@ -395,7 +627,7 @@
   // It provides a general-purpose simple and efficient way for "accessing and removing elements 
   // at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
   // satisfying some criterion, and splitting the sequence into subsequences based on some property."
-  structs.fingertree = function () {
+  structs.fingertree = _struct.fingertree = function () {
 
     FingerTree.prototype.VERSION = VERSION;
 
