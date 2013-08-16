@@ -14,6 +14,17 @@
   // Establish the object that gets returned to break out of a loop iteration.
   var breaker = {};
 
+  // Save bytes in the minified (but not gzipped) version:
+  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+
+  // Create quick reference variables for speed access to core prototypes.
+  var
+    push             = ArrayProto.push,
+    slice            = ArrayProto.slice,
+    concat           = ArrayProto.concat,
+    toString         = ObjProto.toString,
+    hasOwnProperty   = ObjProto.hasOwnProperty;
+
   // Create a safe reference to the Underscore object for use below.
   var _struct = function(obj) {
     if (obj instanceof _struct) return obj;
@@ -400,26 +411,25 @@
     Dequelette.prototype.VERSION = VERSION;
 
     // The constructor creates a Dequelette of a specific type depending on 
-    // the number of elements provided. A single-element array creates a `One`
-    // dequelette, two-element array creates a `Two` dequelette, etc...
+    // the number of elements provided. A single-element array creates a `one`
+    // dequelette, two-element array creates a `two` dequelette, etc...
     function Dequelette(arr) {
       if (_.isArray(arr) && arr.length > 1) {
         if (arr.length === 1)
-          return new One(arr);
+          return new one(arr);
         else if (arr.length === 2)
-          return new Two(arr[0], arr[1]);
+          return new two(arr[0], arr[1]);
         else if (arr.length === 3)
-          return new Three(arr[0], arr[1], arr[2]);
+          return new three(arr[0], arr[1], arr[2]);
         else if (arr.length === 4)
-          return new Four(arr[0], arr[1], arr[2], arr[3]);
+          return new four(arr[0], arr[1], arr[2], arr[3]);
       }
-      else if (arr) {
-        return new One(arr);
-      }
+      else if (arr)
+        return new one(arr);
     }
 
     // A dequelette with one object.
-    var One = function () {
+    var one = function () {
 
       SingleDequelette.prototype.VERSION = VERSION;
 
@@ -429,29 +439,29 @@
         this.struct = [obj];
       }
 
+      SingleDequelette.prototype.full = function () {
+        return false;
+      };
+
       SingleDequelette.prototype.size = function () {
         return 1;
       };
 
-      SingleDequelette.prototype.peekLeft =
+      SingleDequelette.prototype.peekLeft  =
       SingleDequelette.prototype.peekRight = function () {
         return this.val();
       };
 
       SingleDequelette.prototype.insertLeft = function (obj) {
-        return new Two(obj, this.struct);
+        return new two(obj, this.struct[0]);
       };
 
       SingleDequelette.prototype.insertRight = function (obj) {
-        return new Two(this.struct, obj);
+        return new two(this.struct[0], obj);
       };
 
       // This should never happen.
-      SingleDequelette.prototype.removeLeft = function () {
-        return this;
-      };
-
-      // This should never happen.
+      SingleDequelette.prototype.removeLeft  =
       SingleDequelette.prototype.removeRight = function () {
         return this;
       };
@@ -465,7 +475,7 @@
     }();
 
     // A dequelette with two objects.
-    var Two = function () {
+    var two = function () {
 
       DoubleDequelette.prototype.VERSION = VERSION;
 
@@ -474,6 +484,10 @@
       function DoubleDequelette(obj1, obj2) {
         this.struct = [obj1, obj2];
       }
+
+      DoubleDequelette.prototype.full = function () {
+        return false;
+      };
 
       DoubleDequelette.prototype.size = function () {
         return 2;
@@ -488,19 +502,19 @@
       };
 
       DoubleDequelette.prototype.insertLeft = function (obj) {
-        return new Three(obj, this.struct[0], this.struct[1]);
+        return new three(obj, this.struct[0], this.struct[1]);
       };
 
       DoubleDequelette.prototype.insertRight = function (obj) {
-        return new Three(this.struct[0], this.struct[1], obj);
+        return new three(this.struct[0], this.struct[1], obj);
       };
 
       DoubleDequelette.prototype.removeLeft = function () {
-        return new One(this.struct[1]);
+        return new one(this.struct[1]);
       };
 
       DoubleDequelette.prototype.removeRight = function () {
-        return new One(this.struct[0]);
+        return new one(this.struct[0]);
       };
 
       DoubleDequelette.prototype.val = function () {
@@ -512,7 +526,7 @@
     }();
 
     // A dequelette with three objects.
-    var Three = function () {
+    var three = function () {
 
       TripleDequelette.prototype.VERSION = VERSION;
 
@@ -521,6 +535,10 @@
       function TripleDequelette(obj1, obj2, obj3) {
         this.struct = [obj1, obj2, obj3];
       }
+
+      TripleDequelette.prototype.full = function () {
+        return false;
+      };
 
       TripleDequelette.prototype.size = function () {
         return 3;
@@ -535,19 +553,19 @@
       };
 
       TripleDequelette.prototype.insertLeft = function (obj) {
-        return new Four(obj, this.struct[0], this.struct[1], this.struct[2]);
+        return new four(obj, this.struct[0], this.struct[1], this.struct[2]);
       };
 
       TripleDequelette.prototype.insertRight = function (obj) {
-        return new Four(this.struct[0], this.struct[1], this.struct[2], obj);
+        return new four(this.struct[0], this.struct[1], this.struct[2], obj);
       };
 
       TripleDequelette.prototype.removeLeft = function () {
-        return new Two(this.struct[1], this.struct[2]);
+        return new two(this.struct[1], this.struct[2]);
       };
 
       TripleDequelette.prototype.removeRight = function () {
-        return new Two(this.struct[0], this.struct[1]);
+        return new two(this.struct[0], this.struct[1]);
       };
 
       TripleDequelette.prototype.val = function () {
@@ -559,7 +577,7 @@
     }();
 
     // A dequelette with four objects.
-    var Four = function () {
+    var four = function () {
 
       QuatrupleDequelette.prototype.VERSION = VERSION;
 
@@ -568,6 +586,10 @@
       function QuatrupleDequelette(obj1, obj2, obj3, obj4) {
         this.struct = [obj1, obj2, obj3, obj4];
       }
+
+      QuatrupleDequelette.prototype.full = function () {
+        return true;
+      };
 
       QuatrupleDequelette.prototype.size = function () {
         return 4;
@@ -582,21 +604,17 @@
       };
 
       // This should never happen.
-      QuatrupleDequelette.prototype.insertLeft = function (obj) {
-        return this;
-      };
-
-      // This should never happen.
+      QuatrupleDequelette.prototype.insertLeft  =
       QuatrupleDequelette.prototype.insertRight = function (obj) {
         return this;
       };
 
       QuatrupleDequelette.prototype.removeLeft = function () {
-        return new Three(this.struct[1], this.struct[2], this.struct[3]);
+        return new three(this.struct[1], this.struct[2], this.struct[3]);
       };
 
       QuatrupleDequelette.prototype.removeRight = function () {
-        return new Three(this.struct[0], this.struct[1], this.struct[2]);
+        return new three(this.struct[0], this.struct[1], this.struct[2]);
       };
 
       QuatrupleDequelette.prototype.val = function () {
@@ -612,13 +630,167 @@
   }();
 
   // The `deque` below is based on an [article by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx)
-  // and is used by a finger tree as a base structure upon which the tree is built.
-  // It can be one of three things:
-  // - empty
-  // - a single element of a particular type T
-  // - a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
+  // and is used by a finger tree as a base structure upon which the tree is built. It can be one of three things:
+  // 1. empty,
+  // 2. a single element of a particular type T, or
+  // 3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
   _struct.fdeque = function () {
 
+    DequeFactory.prototype.VERSION = VERSION;
+
+    // The constructor creates a Deque of a specific type depending on the number of elements provided.
+    function DequeFactory(left, middle, right) {
+      var isDef = [(left !== void 0), (middle !== void 0), (right !== void 0)];
+      if (isDef[0] && isDef[1] && isDef[2])
+        return new deque(left, middle, right);
+      else if (isDef[0])
+        return new singleDeque(left);
+      else
+        return new emptyDeque();
+    }
+
+    // A deque with no elements.
+    var emptyDeque = function () {
+
+      EmptyDeque.prototype.VERSION = VERSION;
+
+      EmptyDeque.prototype.TYPE = 'empty';
+
+      function EmptyDeque() {
+        this.struct = null;
+      }
+
+      EmptyDeque.prototype.isEmpty = function () {
+        return true;
+      };
+
+      EmptyDeque.prototype.insertLeft  =
+      EmptyDeque.prototype.insertRight = function (obj) {
+        return new singleDeque(obj);
+      };
+
+      // This should never happen.
+      EmptyDeque.prototype.removeLeft  =
+      EmptyDeque.prototype.removeRight = function () {
+        return this;
+      };
+
+      EmptyDeque.prototype.peekLeft  =
+      EmptyDeque.prototype.peekRight = function () {
+        return this.struct;
+      };
+
+      return EmptyDeque;
+
+    }();
+
+    // A deque with one element.
+    var singleDeque = function () {
+
+      SingleDeque.prototype.VERSION = VERSION;
+
+      SingleDeque.prototype.TYPE = 'single';
+
+      function SingleDeque(obj) {
+        this.struct = obj;
+      }
+
+      SingleDeque.prototype.isEmpty = function () {
+        return false;
+      };
+
+      SingleDeque.prototype.insertLeft  = function (obj) {
+        return new deque(new singleDeque(obj), new emptyDeque(), new singleDeque(this.val()));
+      };
+
+      SingleDeque.prototype.insertRight = function (obj) {
+        return new deque(new singleDeque(this.val()), new emptyDeque(), new singleDeque(obj));
+      };
+
+      SingleDeque.prototype.removeLeft  =
+      SingleDeque.prototype.removeRight = function () {
+        return new emptyDeque();
+      };
+
+      SingleDeque.prototype.peekLeft  =
+      SingleDeque.prototype.peekRight = function () {
+        return this.struct;
+      };
+
+      return SingleDeque;
+
+    }();
+
+    // A deque with thee elements: a left dequelette, a deque of dequelettes,
+    // and a right dequelette.
+    var deque = function () {
+
+      Deque.prototype.VERSION = VERSION;
+
+      Deque.prototype.TYPE = 'full';
+
+      function Deque(left, middle, right) {
+        this.left = left;
+        this.middle = middle;
+        this.right = right;
+        this.struct = [left, middle, right];
+      }
+
+      Deque.prototype.isEmpty = function () {
+        return false;
+      };
+
+      Deque.prototype.insertLeft  = function (obj) {
+        if (!this.left.full())
+          return new deque(this.left.insertLeft(obj), this.middle, this.right);
+        return new deque(new fdequelette([obj, this.left.peekLeft()]),
+                         this.middle.insertLeft(this.left.removeLeft()),
+                         this.right);
+      };
+
+      Deque.prototype.insertRight = function (obj) {
+        if (!this.right.full())
+          return new deque(this.left, this.middle, this.right.insertRight(obj));
+        return new deque(this.left,
+                         this.middle.insertRight(this.right.removeRight()),
+                         new fdequelette([this.right.peekRight(), obj]));
+      };
+
+      Deque.prototype.removeLeft  = function () {
+        if (this.left.size() > 1)
+          return new deque(this.left.removeLeft(), this.middle, this.right);
+        else if (!this.middle.isEmpty())
+          return new deque(this.left, this.middle.removeLeft(), this.right);
+        else if (this.right.size() > 1)
+          return new deque(new fdequelette([this.right.peekLeft()], this.middle, this.right.removeLeft()));
+        else
+          return new singleDeque(this.right.peekLeft());
+      };
+
+      Deque.prototype.removeRight = function () {
+        if (this.right.size > 1)
+          return new deque(this.left, this.middle, this.right.removeRight());
+        else if (!this.middle.isEmpty())
+          return new deque(this.left, this.middle.removeRight(), this.middle.peekRight());
+        else if (this.left.size() > 1)
+          return new deque(this.left.removeRight(), this.middle, new fdequelette([this.left.peekRight()]));
+        else
+          return new singleDeque(this.left.peekRight());
+      };
+
+      Deque.prototype.peekLeft  = function () {
+          return this.left.peekLeft();
+      };
+
+      Deque.prototype.peekRight = function () {
+        return this.right.peekRight();
+      };
+
+      return Deque;
+
+    }();
+
+    return DequeFactory;
   }();
 
   // Underscore Finger Tree

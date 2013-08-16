@@ -88,6 +88,50 @@ _struct may be freely distributed under the MIT license.</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
+              <p>Create a safe reference to the Underscore object for use below.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> _struct = <span class="keyword">function</span>(obj) {
+    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> _struct) <span class="keyword">return</span> obj;
+    <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> _struct)) <span class="keyword">return</span> <span class="keyword">new</span> _struct(obj);
+    <span class="keyword">this</span>._wrapped = obj;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Export the Underscore _struct object for <strong>Node.js</strong>, with
+backwards-compatibility for the old <code>require()</code> API. If we&#39;re in
+the browser, add <code>_struct</code> as a global object via a string identifier,
+for Closure Compiler &quot;advanced&quot; mode.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (<span class="keyword">typeof</span> exports !== <span class="string">'undefined'</span>) {
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> module !== <span class="string">'undefined'</span> &amp;&amp; module.exports) {
+      exports = module.exports = _struct;
+    }
+    exports._struct = _struct;
+  } <span class="keyword">else</span> {
+    root._struct = _struct;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
               <p>Defining helper functions.</p>
 <p>Export a module for <strong>Node.js</strong>.</p>
 
@@ -105,11 +149,11 @@ _struct may be freely distributed under the MIT license.</code></pre>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Used to mix in custom behavior to a struct.</p>
 
@@ -124,11 +168,11 @@ _struct may be freely distributed under the MIT license.</code></pre>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>An internal function that returns true if the given object 
 represents an object, but not a function or array.</p>
@@ -142,11 +186,11 @@ represents an object, but not a function or array.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Simple equality function that returns true if the token <code>==</code>
 the given obj.</p>
@@ -160,11 +204,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Strict form of equals function.</p>
 
@@ -177,11 +221,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Define a container to keep track of all struct objects.</p>
 
@@ -194,11 +238,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <h2>Underscore Linked List</h2>
 
@@ -207,27 +251,27 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>  structs.list = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  structs.list = _struct.list = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
     List.prototype.VERSION = VERSION;</pre></div></div>
             
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Creates a new list object. Pass an array of elements, a valid list struct 
 object, or leave empty to initialize an empty list.</p>
@@ -246,11 +290,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Constructs a list element by placing the obj at the head of the list.</p>
 
@@ -263,11 +307,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Exports a list instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -284,11 +328,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>A modified version of _.each made for traversing lists.</p>
 
@@ -306,11 +350,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Retrieves an element from the list, if it exists. Return 
 a new list with the found element, or an empty list if not found.</p>
@@ -333,11 +377,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Returns an empty list.</p>
 
@@ -350,11 +394,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Creates a new list, with the given obj inserted at the head of the list.</p>
 
@@ -368,11 +412,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Returns true if the current element is empty, and
 there exist no pointers to other elements in the list.</p>
@@ -386,11 +430,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Returns the length of the list.</p>
 
@@ -409,11 +453,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Add your own custom functions to every list object.</p>
 
@@ -426,11 +470,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Returns a list whose head is next element in the list. If a 
 num is provided, moves num spaces forward in the list.</p>
@@ -448,11 +492,11 @@ num is provided, moves num spaces forward in the list.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Returns a list with the given token removed. If no token
 is given, removes the current element. If no element could 
@@ -484,11 +528,11 @@ be found, returns the original list.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Returns the value of the current element in the zipper. If a
 value is provided, update the value of the current element.</p>
@@ -509,11 +553,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h2>Underscore Zipper</h2>
 
@@ -522,27 +566,27 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>  structs.zipper = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  structs.zipper = _struct.zipper = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
     Zipper.prototype.VERSION = VERSION;</pre></div></div>
             
         </li>
         
         
-        <li id="section-28">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Creates a new zipper object.</p>
 
@@ -562,11 +606,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Constructs a zipper element at the beginning of a zipper, which consists of:
 1) A path back to the front of the zipper, 
@@ -584,11 +628,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Exports a zipper instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -605,11 +649,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Moves to the first element of the zipper.</p>
 
@@ -625,11 +669,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Returns the zipper with the last element removed.</p>
 
@@ -647,11 +691,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Inserts an element directly left of the current element.</p>
 
@@ -665,11 +709,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Inserts an element directly right of the current element.</p>
 
@@ -687,11 +731,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Moves to the last element of the zipper.</p>
 
@@ -707,11 +751,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Moves the cursor left. If a num is provided, moves num places
 to the left of the cursor.</p>
@@ -729,11 +773,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Add your own custom functions to every zipper object.</p>
 
@@ -746,11 +790,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Removes the current element from the zipper. If a path to the element
 exists, points the path to the rest of the zipper.  If no elements 
@@ -781,11 +825,11 @@ element in the path.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Moves the cursor right. If a num is provided, moves num places
 to the right of the cursor.</p>
@@ -803,11 +847,11 @@ to the right of the cursor.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Returns the tail of the zipper, which includes all elements except
 the first element in the zipper.</p>
@@ -821,11 +865,11 @@ the first element in the zipper.</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Returns the value of the current element in the zipper. If a
 value is provided, update the value of the current element.</p>
@@ -846,11 +890,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <h2>Underscore Monad</h2>
 
@@ -859,11 +903,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Monads provide a way to nest functions of a similar kind in the same container,
 acting as a functional pipeline, where data can be processed in steps. They
@@ -871,18 +915,18 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  structs.monad = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  structs.monad = _struct.monad = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
     Monad.prototype.VERSION = VERSION;</pre></div></div>
             
         </li>
         
         
-        <li id="section-44">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Creates a monad object.</p>
 
@@ -897,11 +941,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-45">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Exports a monad instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -918,11 +962,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-46">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Runs a pipeline of functions defined by the Monad constructor.</p>
 
@@ -939,56 +983,21 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-47">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
-              <p>The <code>dequelette</code> below is basically a limited kind of deque, in which there can
+              <p>The dequelette below is basically a limited kind of deque, in which there can
 only store one, two, three or four items.  It is used to build a <code>deque</code> that
 will serve as the structure underlying a finger tree.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> fdequelette = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-      
-  }();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-48">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
-              </div>
-              <p>The <code>deque</code> below is based on an <a href="http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx">article by Eric Lippert</a>
-and is used by a finger tree as a base structure upon which the tree is built.
-It can be one of three things:
-- empty
-- a single element of a particular type T
-- a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.</p>
+            <div class="content"><div class='highlight'><pre>  _struct.fdequelette = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> fdeque = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-
-  }();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-49">
-            <div class="annotation">
-              
-              <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-49">&#182;</a>
-              </div>
-              <h2>Underscore Finger Tree</h2>
-
-            </div>
+    Dequelette.prototype.VERSION = VERSION;</pre></div></div>
             
         </li>
         
@@ -999,16 +1008,26 @@ It can be one of three things:
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
-              <p>A finger tree is essentially the swiss army knife of functional data structures.
-It provides a general-purpose simple and efficient way for &quot;accessing and removing elements 
-at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
-satisfying some criterion, and splitting the sequence into subsequences based on some property.&quot;</p>
+              <p>The constructor creates a Dequelette of a specific type depending on 
+the number of elements provided. A single-element array creates a <code>One</code>
+dequelette, two-element array creates a <code>Two</code> dequelette, etc...</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  structs.fingertree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-
-    FingerTree.prototype.VERSION = VERSION;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">Dequelette</span><span class="params">(arr)</span> {</span>
+      <span class="keyword">if</span> (_.isArray(arr) &amp;&amp; arr.length &gt; <span class="number">1</span>) {
+        <span class="keyword">if</span> (arr.length === <span class="number">1</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> One(arr);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">2</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Two(arr[<span class="number">0</span>], arr[<span class="number">1</span>]);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">3</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Three(arr[<span class="number">0</span>], arr[<span class="number">1</span>], arr[<span class="number">2</span>]);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">4</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Four(arr[<span class="number">0</span>], arr[<span class="number">1</span>], arr[<span class="number">2</span>], arr[<span class="number">3</span>]);
+      }
+      <span class="keyword">else</span> <span class="keyword">if</span> (arr)
+        <span class="keyword">return</span> <span class="keyword">new</span> One(arr);
+    }</pre></div></div>
             
         </li>
         
@@ -1018,6 +1037,382 @@ satisfying some criterion, and splitting the sequence into subsequences based on
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>A dequelette with one object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> One = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+      SingleDequelette.prototype.VERSION = VERSION;
+
+      SingleDequelette.prototype.TYPE = <span class="string">'one'</span>;
+
+      <span class="function"><span class="keyword">function</span> <span class="title">SingleDequelette</span><span class="params">(obj)</span> {</span>
+        <span class="keyword">this</span>.struct = [obj];
+      }
+
+      SingleDequelette.prototype.size = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="number">1</span>;
+      };
+
+      SingleDequelette.prototype.peekLeft =
+      SingleDequelette.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.val();
+      };
+
+      SingleDequelette.prototype.insertLeft = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Two(obj, <span class="keyword">this</span>.struct[<span class="number">0</span>]);
+      };
+
+      SingleDequelette.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Two(<span class="keyword">this</span>.struct[<span class="number">0</span>], obj);
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>This should never happen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      SingleDequelette.prototype.removeLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>This should never happen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      SingleDequelette.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+      };
+
+      SingleDequelette.prototype.val = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">0</span>];
+      };
+
+      <span class="keyword">return</span> SingleDequelette;
+
+    }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>A dequelette with two objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> Two = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+      DoubleDequelette.prototype.VERSION = VERSION;
+
+      DoubleDequelette.prototype.TYPE = <span class="string">'two'</span>;
+
+      <span class="function"><span class="keyword">function</span> <span class="title">DoubleDequelette</span><span class="params">(obj1, obj2)</span> {</span>
+        <span class="keyword">this</span>.struct = [obj1, obj2];
+      }
+
+      DoubleDequelette.prototype.size = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="number">2</span>;
+      };
+
+      DoubleDequelette.prototype.peekLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">0</span>];
+      };
+
+      DoubleDequelette.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">1</span>];
+      };
+
+      DoubleDequelette.prototype.insertLeft = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Three(obj, <span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>]);
+      };
+
+      DoubleDequelette.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Three(<span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>], obj);
+      };
+
+      DoubleDequelette.prototype.removeLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> One(<span class="keyword">this</span>.struct[<span class="number">1</span>]);
+      };
+
+      DoubleDequelette.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> One(<span class="keyword">this</span>.struct[<span class="number">0</span>]);
+      };
+
+      DoubleDequelette.prototype.val = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct;
+      };
+
+      <span class="keyword">return</span> DoubleDequelette;
+
+    }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>A dequelette with three objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> Three = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+      TripleDequelette.prototype.VERSION = VERSION;
+
+      TripleDequelette.prototype.TYPE = <span class="string">'three'</span>;
+
+      <span class="function"><span class="keyword">function</span> <span class="title">TripleDequelette</span><span class="params">(obj1, obj2, obj3)</span> {</span>
+        <span class="keyword">this</span>.struct = [obj1, obj2, obj3];
+      }
+
+      TripleDequelette.prototype.size = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="number">3</span>;
+      };
+
+      TripleDequelette.prototype.peekLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">0</span>];
+      };
+
+      TripleDequelette.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">2</span>];
+      };
+
+      TripleDequelette.prototype.insertLeft = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Four(obj, <span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>], <span class="keyword">this</span>.struct[<span class="number">2</span>]);
+      };
+
+      TripleDequelette.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Four(<span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>], <span class="keyword">this</span>.struct[<span class="number">2</span>], obj);
+      };
+
+      TripleDequelette.prototype.removeLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Two(<span class="keyword">this</span>.struct[<span class="number">1</span>], <span class="keyword">this</span>.struct[<span class="number">2</span>]);
+      };
+
+      TripleDequelette.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Two(<span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>]);
+      };
+
+      TripleDequelette.prototype.val = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct;
+      };
+
+      <span class="keyword">return</span> TripleDequelette;
+
+    }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>A dequelette with four objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> Four = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+      QuatrupleDequelette.prototype.VERSION = VERSION;
+
+      QuatrupleDequelette.prototype.TYPE = <span class="string">'four'</span>;
+
+      <span class="function"><span class="keyword">function</span> <span class="title">QuatrupleDequelette</span><span class="params">(obj1, obj2, obj3, obj4)</span> {</span>
+        <span class="keyword">this</span>.struct = [obj1, obj2, obj3, obj4];
+      }
+
+      QuatrupleDequelette.prototype.size = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="number">4</span>;
+      };
+
+      QuatrupleDequelette.prototype.peekLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">0</span>];
+      };
+
+      QuatrupleDequelette.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct[<span class="number">3</span>];
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>This should never happen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      QuatrupleDequelette.prototype.insertLeft = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>This should never happen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      QuatrupleDequelette.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+      };
+
+      QuatrupleDequelette.prototype.removeLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Three(<span class="keyword">this</span>.struct[<span class="number">1</span>], <span class="keyword">this</span>.struct[<span class="number">2</span>], <span class="keyword">this</span>.struct[<span class="number">3</span>]);
+      };
+
+      QuatrupleDequelette.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> Three(<span class="keyword">this</span>.struct[<span class="number">0</span>], <span class="keyword">this</span>.struct[<span class="number">1</span>], <span class="keyword">this</span>.struct[<span class="number">2</span>]);
+      };
+
+      QuatrupleDequelette.prototype.val = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct;
+      };
+
+      <span class="keyword">return</span> QuatrupleDequelette;
+
+    }();
+
+    <span class="keyword">return</span> Dequelette;
+
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>The <code>deque</code> below is based on an <a href="http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx">article by Eric Lippert</a>
+and is used by a finger tree as a base structure upon which the tree is built. It can be one of three things:
+1. empty
+2. a single element of a particular type T
+3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _struct.fdeque = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+    Deque.prototype.VERSION = VERSION;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>The constructor creates a Deque of a specific type depending on the number of elements provided.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">Deque</span><span class="params">(arr)</span> {</span>
+      <span class="keyword">if</span> (_.isArray(arr)) {
+        <span class="keyword">if</span> (arr.length === <span class="number">0</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> One(arr);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">2</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Two(arr[<span class="number">0</span>], arr[<span class="number">1</span>]);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">3</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Three(arr[<span class="number">0</span>], arr[<span class="number">1</span>], arr[<span class="number">2</span>]);
+        <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">4</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> Four(arr[<span class="number">0</span>], arr[<span class="number">1</span>], arr[<span class="number">2</span>], arr[<span class="number">3</span>]);
+      }
+      <span class="keyword">else</span> <span class="keyword">if</span> (arr)
+        <span class="keyword">return</span> <span class="keyword">new</span> SingleDeque(arr);
+      <span class="keyword">else</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> EmptyDeque();
+    }
+
+    <span class="keyword">return</span> Deque;
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <h2>Underscore Finger Tree</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>A finger tree is essentially the swiss army knife of functional data structures.
+It provides a general-purpose simple and efficient way for &quot;accessing and removing elements 
+at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
+satisfying some criterion, and splitting the sequence into subsequences based on some property.&quot;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  structs.fingertree = _struct.fingertree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+    FingerTree.prototype.VERSION = VERSION;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>Creates a finger tree object.</p>
 
@@ -1029,11 +1424,11 @@ satisfying some criterion, and splitting the sequence into subsequences based on
         </li>
         
         
-        <li id="section-52">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>Exports a finger tree instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -1054,11 +1449,11 @@ satisfying some criterion, and splitting the sequence into subsequences based on
         </li>
         
         
-        <li id="section-53">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>Mix-in a function to mix-in a hash of structs to the <strong>Underscore.js</strong> library.
 This can be used to add your own custom structs to the library.</p>
@@ -1076,11 +1471,11 @@ This can be used to add your own custom structs to the library.</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>Add all struct objects to the <strong>Underscore.js</strong> library.</p>
 
