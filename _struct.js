@@ -414,9 +414,9 @@
     // the number of elements provided. A single-element array creates a `one`
     // dequelette, two-element array creates a `two` dequelette, etc...
     function Dequelette(arr) {
-      if (_.isArray(arr) && arr.length > 1) {
+      if (_.isArray(arr) && arr.length) {
         if (arr.length === 1)
-          return new one(arr);
+          return new one(arr[0]);
         else if (arr.length === 2)
           return new two(arr[0], arr[1]);
         else if (arr.length === 3)
@@ -629,25 +629,80 @@
 
   }();
 
-  // The `deque` below is based on an [article by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx)
-  // and is used by a finger tree as a base structure upon which the tree is built. It can be one of three things:
-  // 1. empty,
-  // 2. a single element of a particular type T, or
-  // 3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
-  _struct.fdeque = function () {
+  // Underscore Finger Tree
+  // ----------------------
+  // A finger tree is essentially the swiss army knife of functional data structures.
+  // It provides a general-purpose simple and efficient way for "accessing and removing elements 
+  // at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
+  // satisfying some criterion, and splitting the sequence into subsequences based on some property."
+  //
+  // The underyling structure is essentially a deque of "dequelettes," arranged so that you have
+  // constant-time access to the "fingers" (leaves) of the tree.
+  structs.fingertree = _struct.fingertree = function () {
 
-    DequeFactory.prototype.VERSION = VERSION;
+    FingerTree.prototype.VERSION = VERSION;
 
-    // The constructor creates a Deque of a specific type depending on the number of elements provided.
-    function DequeFactory(left, middle, right) {
+    // The constructor creates a Deque of a specific type depending on the number and type of elements provided.
+    // The `deque` used to build a finger tree is based on an [article by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx)
+    // It can be one of three things:
+    // 1. empty,
+    // 2. a single element of a particular type T, or
+    // 3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.
+    function FingerTree(left, middle, right) {
       var isDef = [(left !== void 0), (middle !== void 0), (right !== void 0)];
-      if (isDef[0] && isDef[1] && isDef[2])
-        return new deque(left, middle, right);
-      else if (isDef[0])
-        return new singleDeque(left);
-      else
-        return new emptyDeque();
+      if (_.isArray(left)) {
+        // An array of objects were directly passed in. Create a deque to hold them.
+        this.struct = _.reduce(left, function (deque, obj) { return deque.insertRight(obj); }, new emptyDeque());
+      } else if (isDef[0] && isDef[1] && isDef[2]) {
+        // Assume a left dequelette, followed by a deque of dequelettes, followed by a right dequelette were passed in.
+        this.struct = new deque(left, middle, right);
+      } else if (isDef[0]) {
+        if (left instanceof emptyDeque || left instanceof singleDeque || left instanceof deque)
+          // A deque was directly passed in.
+          this.struct = left;
+        else
+          // A single object was directly passed in. 
+          this.struct = new singleDeque(left);
+      } else
+        this.struct = new emptyDeque();
     }
+
+    // Exports a finger tree instance for use in an **Underscore.js** mixin.
+    FingerTree.prototype._exports = function () {
+      return {
+        fingertree: function (left, middle, right) {
+          return new FingerTree(left, middle, right);
+        }
+      };
+    };
+
+    FingerTree.prototype.isEmpty = function () {
+        return this.struct.isEmpty();
+    };
+
+    FingerTree.prototype.insertLeft = function (obj) {
+      return _.fingertree(this.struct.insertLeft(obj));
+    };
+
+    FingerTree.prototype.insertRight = function (obj) {
+      return _.fingertree(this.struct.insertRight(obj));
+    };
+
+    FingerTree.prototype.peekLeft = function () {
+        return this.struct.peekLeft();
+    };
+
+    FingerTree.prototype.peekRight = function () {
+        return this.struct.peekRight();
+    };
+
+    FingerTree.prototype.removeLeft = function () {
+        return _.fingertree(this.struct.removeLeft());
+    };
+
+    FingerTree.prototype.removeRight = function () {
+        return _.fingertree(this.struct.removeRight());
+    };
 
     // A deque with no elements.
     var emptyDeque = function () {
@@ -669,15 +724,15 @@
         return new singleDeque(obj);
       };
 
+      EmptyDeque.prototype.peekLeft  =
+      EmptyDeque.prototype.peekRight = function () {
+        return this.struct;
+      };
+
       // This should never happen.
       EmptyDeque.prototype.removeLeft  =
       EmptyDeque.prototype.removeRight = function () {
         return this;
-      };
-
-      EmptyDeque.prototype.peekLeft  =
-      EmptyDeque.prototype.peekRight = function () {
-        return this.struct;
       };
 
       return EmptyDeque;
@@ -700,21 +755,21 @@
       };
 
       SingleDeque.prototype.insertLeft  = function (obj) {
-        return new deque(new singleDeque(obj), new emptyDeque(), new singleDeque(this.val()));
+        return new deque(new _struct.fdequelette([obj]), new emptyDeque(), _struct.fdequelette([this.struct]));
       };
 
       SingleDeque.prototype.insertRight = function (obj) {
-        return new deque(new singleDeque(this.val()), new emptyDeque(), new singleDeque(obj));
-      };
-
-      SingleDeque.prototype.removeLeft  =
-      SingleDeque.prototype.removeRight = function () {
-        return new emptyDeque();
+        return new deque(new _struct.fdequelette([this.struct]), new emptyDeque(), _struct.fdequelette([obj]));
       };
 
       SingleDeque.prototype.peekLeft  =
       SingleDeque.prototype.peekRight = function () {
         return this.struct;
+      };
+
+      SingleDeque.prototype.removeLeft  =
+      SingleDeque.prototype.removeRight = function () {
+        return new emptyDeque();
       };
 
       return SingleDeque;
@@ -727,7 +782,7 @@
 
       Deque.prototype.VERSION = VERSION;
 
-      Deque.prototype.TYPE = 'full';
+      Deque.prototype.TYPE = 'deque';
 
       function Deque(left, middle, right) {
         this.left = left;
@@ -743,7 +798,7 @@
       Deque.prototype.insertLeft  = function (obj) {
         if (!this.left.full())
           return new deque(this.left.insertLeft(obj), this.middle, this.right);
-        return new deque(new fdequelette([obj, this.left.peekLeft()]),
+        return new deque(new _struct.fdequelette([obj, this.left.peekLeft()]),
                          this.middle.insertLeft(this.left.removeLeft()),
                          this.right);
       };
@@ -753,29 +808,7 @@
           return new deque(this.left, this.middle, this.right.insertRight(obj));
         return new deque(this.left,
                          this.middle.insertRight(this.right.removeRight()),
-                         new fdequelette([this.right.peekRight(), obj]));
-      };
-
-      Deque.prototype.removeLeft  = function () {
-        if (this.left.size() > 1)
-          return new deque(this.left.removeLeft(), this.middle, this.right);
-        else if (!this.middle.isEmpty())
-          return new deque(this.left, this.middle.removeLeft(), this.right);
-        else if (this.right.size() > 1)
-          return new deque(new fdequelette([this.right.peekLeft()], this.middle, this.right.removeLeft()));
-        else
-          return new singleDeque(this.right.peekLeft());
-      };
-
-      Deque.prototype.removeRight = function () {
-        if (this.right.size > 1)
-          return new deque(this.left, this.middle, this.right.removeRight());
-        else if (!this.middle.isEmpty())
-          return new deque(this.left, this.middle.removeRight(), this.middle.peekRight());
-        else if (this.left.size() > 1)
-          return new deque(this.left.removeRight(), this.middle, new fdequelette([this.left.peekRight()]));
-        else
-          return new singleDeque(this.left.peekRight());
+                         new _struct.fdequelette([this.right.peekRight(), obj]));
       };
 
       Deque.prototype.peekLeft  = function () {
@@ -786,35 +819,31 @@
         return this.right.peekRight();
       };
 
+      Deque.prototype.removeLeft  = function () {
+        if (this.left.size() > 1)
+          return new deque(this.left.removeLeft(), this.middle, this.right);
+        else if (!this.middle.isEmpty())
+          return new deque(this.left, this.middle.removeLeft(), this.right);
+        else if (this.right.size() > 1)
+          return new deque(new _struct.fdequelette([this.right.peekLeft()], this.middle, this.right.removeLeft()));
+        else
+          return new singleDeque(this.right.peekLeft());
+      };
+
+      Deque.prototype.removeRight = function () {
+        if (this.right.size() > 1)
+          return new deque(this.left, this.middle, this.right.removeRight());
+        else if (!this.middle.isEmpty())
+          return new deque(this.left, this.middle.removeRight(), this.middle.peekRight());
+        else if (this.left.size() > 1)
+          return new deque(this.left.removeRight(), this.middle, new _struct.fdequelette([this.left.peekRight()]));
+        else
+          return new singleDeque(this.left.peekRight());
+      };
+
       return Deque;
 
     }();
-
-    return DequeFactory;
-  }();
-
-  // Underscore Finger Tree
-  // ----------------------
-  // A finger tree is essentially the swiss army knife of functional data structures.
-  // It provides a general-purpose simple and efficient way for "accessing and removing elements 
-  // at both ends, concatenatation, insertion and deletion at arbitrary points, finding an element
-  // satisfying some criterion, and splitting the sequence into subsequences based on some property."
-  structs.fingertree = _struct.fingertree = function () {
-
-    FingerTree.prototype.VERSION = VERSION;
-
-    // Creates a finger tree object.
-    function FingerTree() {
-    }
-
-    // Exports a finger tree instance for use in an **Underscore.js** mixin.
-    FingerTree.prototype._exports = function () {
-      return {
-        fingertree: function () {
-          return new FingerTree();
-        }
-      };
-    };
 
     return FingerTree;
 
