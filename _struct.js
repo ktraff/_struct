@@ -825,7 +825,7 @@
         else if (!this.middle.isEmpty())
           return new deque(this.left, this.middle.removeLeft(), this.right);
         else if (this.right.size() > 1)
-          return new deque(new _struct.fdequelette([this.right.peekLeft()], this.middle, this.right.removeLeft()));
+          return new deque(new _struct.fdequelette([this.right.peekLeft()]), this.middle, this.right.removeLeft());
         else
           return new singleDeque(this.right.peekLeft());
       };

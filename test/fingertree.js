@@ -26,22 +26,18 @@ $(function () {
       strictEqual(fingertree.struct.TYPE, 'deque', 'created a finger tree with many ints');
       strictEqual(fingertree.peekLeft(), 1, '`1` is the first element in the finger tree');
       strictEqual(fingertree.peekRight(), 5, '`5` is the last element in the finger tree');
-      strictEqual(fingertree.removeRight().peekRight(), 4, '`4` is the last element in the finger tree, with 5 removed');
-      strictEqual(fingertree.removeRight().removeRight().peekRight(), 3, '`3` is the last element in the finger tree, with 5 and 4 removed');
-      strictEqual(fingertree.removeRight().removeRight().removeRight().peekRight(), 2,
-                  '`2` is the last element in the finger tree, with 5, 4, and 3 removed');
-      strictEqual(fingertree.removeRight().removeRight().removeRight().removeRight().peekRight(), 1,
-                  '`1` is the last element in the finger tree, with 5, 4, 3, and 2 removed');
-      strictEqual(fingertree.removeRight().removeRight().removeRight().removeRight().removeRight().peekRight(), null,
-                  'the list is null after removing all elements');
-      strictEqual(fingertree.removeLeft().peekLeft(), 2, '`2` is the first element in the finger tree, with 1 removed');
-      strictEqual(fingertree.removeLeft().removeLeft().peekLeft(), 3, '`3` is the first element in the finger tree, with 1 and 2 removed');
-      strictEqual(fingertree.removeLeft().removeLeft().removeLeft().peekLeft(), 4,
-                  '`4` is the first element in the finger tree, with 1, 2, and 3 removed');
-      strictEqual(fingertree.removeLeft().removeLeft().removeLeft().removeLeft().peekLeft(), 5,
-                  '`5` is the first element in the finger tree, with 1, 2, 3, and 4 removed');
-      strictEqual(fingertree.removeLeft().removeLeft().removeLeft().removeLeft().removeLeft().peekLeft(), null,
-                  'the list is null after removing all elements');
+      var removedTree = fingertree;
+      for (var i = 4; i > 0; i--) {
+        removedTree = removedTree.removeRight();
+        strictEqual(removedTree.peekRight(), i, '`' + i + '` is the last element in the finger tree with ' + (5 - i) + ' elements removed');
+      }
+      strictEqual(removedTree.removeRight().peekRight(), null, 'the list is null after removing all elements');
+      removedTree = fingertree;
+      for (i = 2; i <= 5; i++) {
+        removedTree = removedTree.removeLeft();
+        strictEqual(removedTree.peekLeft(), i, '`' + i + '` is the first element in the finger tree with ' + (i - 1) + ' elements removed');
+      }
+      strictEqual(removedTree.removeLeft().peekLeft(), null, 'the list is null after removing all elements');
   });
 
   test('Insert and remove elements from an empty finger tree', function () {
@@ -67,7 +63,7 @@ $(function () {
   });
 
   test('Insert and remove elements from an single finger tree', function () {
-      var singleTree = _.fingertree([1])
+      var singleTree = _.fingertree([1]);
       strictEqual(singleTree.struct.TYPE, 'single', 'empty tree is now a single tree');
       strictEqual(singleTree.peekLeft(), 1, 'inserted 1 into the finger tree');
       var emptyTree = _.fingertree();
