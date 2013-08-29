@@ -3,26 +3,26 @@ $(function () {
   module('Finger Tree functions');
 
   test('Create an empty finger tree', function () {
-      var fingertree = _.fingertree();
+      var fingertree = _.fingerTree();
       strictEqual(fingertree.peekLeft(), null, 'no elements in the finger tree');
   });
 
   test('Create an single finger tree', function () {
-      var fingertree = _.fingertree(1);
+      var fingertree = _.fingerTree(1);
       strictEqual(fingertree.struct.TYPE, 'single', 'created a single tree with an int');
       strictEqual(fingertree.peekLeft(), 1, 'one element in the finger tree');
-      fingertree = _.fingertree([1]);
+      fingertree = _.fingerTree([1]);
       strictEqual(fingertree.struct.TYPE, 'single', 'created a single tree with an array');
       strictEqual(fingertree.peekLeft(), 1, 'one element in the finger tree');
       strictEqual(fingertree.peekRight(), 1, 'one element in the finger tree');
   });
 
   test('Create a finger tree with multiple elements, perform some insertion and deletion', function () {
-      var fingertree = _.fingertree([1, 2]);
+      var fingertree = _.fingerTree([1, 2]);
       strictEqual(fingertree.struct.TYPE, 'deque', 'created a finger tree with two ints');
       strictEqual(fingertree.peekLeft(), 1, '`1` is the first element in the finger tree');
       strictEqual(fingertree.peekRight(), 2, '`2` is the second element in the finger tree');
-      fingertree = _.fingertree([1, 2, 3, 4, 5]);
+      fingertree = _.fingerTree([1, 2, 3, 4, 5]);
       strictEqual(fingertree.struct.TYPE, 'deque', 'created a finger tree with many ints');
       strictEqual(fingertree.peekLeft(), 1, '`1` is the first element in the finger tree');
       strictEqual(fingertree.peekRight(), 5, '`5` is the last element in the finger tree');
@@ -41,7 +41,7 @@ $(function () {
   });
 
   test('Insert and remove elements from an empty finger tree', function () {
-      var emptyTree = _.fingertree();
+      var emptyTree = _.fingerTree();
       strictEqual(emptyTree.peekLeft(), null, 'no elements in the finger tree');
       var singleTree = emptyTree.insertLeft(1);
       strictEqual(singleTree.struct.TYPE, 'single', 'empty tree is now a single tree');
@@ -63,10 +63,10 @@ $(function () {
   });
 
   test('Insert and remove elements from an single finger tree', function () {
-      var singleTree = _.fingertree([1]);
+      var singleTree = _.fingerTree([1]);
       strictEqual(singleTree.struct.TYPE, 'single', 'empty tree is now a single tree');
       strictEqual(singleTree.peekLeft(), 1, 'inserted 1 into the finger tree');
-      var emptyTree = _.fingertree();
+      var emptyTree = _.fingerTree();
       strictEqual(emptyTree.peekLeft(), null, 'no elements in the finger tree');
       emptyTree = singleTree.removeRight();
       strictEqual(emptyTree.peekLeft(), null, 'removed 1 from the single tree');
@@ -82,6 +82,18 @@ $(function () {
       strictEqual(singleTree.peekRight(), 1, '2 removed from the double tree');
       emptyTree = doubleTree.removeLeft().removeRight();
       strictEqual(emptyTree.peekLeft(), null, 'no elements in the finger tree');
+  });
+
+  test('Simple finger tree mixin', function () {
+      var tree = _.fingerTree();
+      tree.mixin({
+        returnTwo: function () {
+            return 2;
+        }
+      });
+      strictEqual(tree.returnTwo(), 2, 'added a mixin to a finger tree');
+      var treeTwo = _.fingerTree([1, 2, 4, 6, 8]);
+      strictEqual(treeTwo.returnTwo(), 2, 'added a mixin to a finger tree');
   });
 
 });

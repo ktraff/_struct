@@ -70,6 +70,15 @@
     return _.isObject(obj) && !_.isFunction(obj) && !_.isArray(obj);
   };
 
+  // Compares two elements.
+  var compareTo = function (elem1, elem2) {
+    if (elem1 < elem2)
+      return -1;
+    else if (elem1 > elem2)
+      return 1;
+    return 0;
+  };
+
   // Simple equality function that returns true if the token `==`
   // the given obj.
   var equals = function (token, obj) {
@@ -399,6 +408,11 @@
       return this.pipeline(this._cons(obj), fns);
     };
 
+    // Add your own custom functions to every monad object.
+    Monad.prototype.mixin = function (obj) {
+      mixin.apply(this, [obj, Monad.prototype]);
+    };
+
     return Monad;
 
   }();
@@ -638,7 +652,7 @@
   //
   // The underyling structure is essentially a deque of "dequelettes," arranged so that you have
   // constant-time access to the "fingers" (leaves) of the tree.
-  structs.fingertree = _struct.fingertree = function () {
+  structs.fingerTree = _struct.fingerTree = function () {
 
     FingerTree.prototype.VERSION = VERSION;
 
@@ -670,10 +684,15 @@
     // Exports a finger tree instance for use in an **Underscore.js** mixin.
     FingerTree.prototype._exports = function () {
       return {
-        fingertree: function (left, middle, right) {
+        fingerTree: function (left, middle, right) {
           return new FingerTree(left, middle, right);
         }
       };
+    };
+
+    // Add your own custom functions to every finger tree object.
+    FingerTree.prototype.mixin = function (obj) {
+      mixin.apply(this, [obj, FingerTree.prototype]);
     };
 
     FingerTree.prototype.isEmpty = function () {
@@ -681,11 +700,11 @@
     };
 
     FingerTree.prototype.insertLeft = function (obj) {
-      return _.fingertree(this.struct.insertLeft(obj));
+      return _.fingerTree(this.struct.insertLeft(obj));
     };
 
     FingerTree.prototype.insertRight = function (obj) {
-      return _.fingertree(this.struct.insertRight(obj));
+      return _.fingerTree(this.struct.insertRight(obj));
     };
 
     FingerTree.prototype.peekLeft = function () {
@@ -697,11 +716,11 @@
     };
 
     FingerTree.prototype.removeLeft = function () {
-        return _.fingertree(this.struct.removeLeft());
+        return _.fingerTree(this.struct.removeLeft());
     };
 
     FingerTree.prototype.removeRight = function () {
-        return _.fingertree(this.struct.removeRight());
+        return _.fingerTree(this.struct.removeRight());
     };
 
     // A deque with no elements.
@@ -846,6 +865,83 @@
     }();
 
     return FingerTree;
+
+  }();
+
+  // Underscore Binary Search Tree
+  // -----------------------------
+  // A binary search tree are trees with at most two child nodes, with elements stored
+  // in symmetric order. This guarantees that the left subtree will always contain
+  // elements smaller than the node itself, and the right subtree will always contain
+  // elements larger than itself.
+  structs.binSearchTree = _struct.binSearchTree = function () {
+
+    BinSearchTree.prototype.VERSION = VERSION;
+
+    // Creates a new binSearchTree object. Pass an array of elements, a valid
+    // binSearchTree node, or leave empty to initialize an empty tree.
+    function BinSearchTree(obj, comparator) {
+      if (_.isFunction(comparator))
+        this.comparator = comparator;
+      if (_.isArray(obj))
+        this.struct = _.reduce(obj, function (struct, obj) {
+          return this.insert(obj, struct).struct;
+        }, null, this);
+      else if (isStrictObject(obj))
+        this.struct = obj;
+      else
+        this.struct = this._cons(null, obj, null);
+    }
+
+    // Creates a binSearchTree node.
+    BinSearchTree.prototype._cons = function (left, curr, right) {
+      curr = (curr === void 0) ? null : curr;
+      return { left: left, curr: curr, right: right };
+    };
+
+    // Exports a binSearchTree instance for use in an **Underscore.js** mixin.
+    BinSearchTree.prototype._exports = function () {
+      return {
+        binSearchTree: function (obj) {
+          return new BinSearchTree(obj);
+        }
+      };
+    };
+
+    // The default comparison function uses the global `compareTo` helper.
+    BinSearchTree.prototype.comparator = compareTo;
+
+    // Inserts a node into the binSearchTree. Assume the struct
+    // is the root of a binSearchTree, and the obj is the object to insert.
+    BinSearchTree.prototype.insert = function (obj, struct) {
+      if (struct === null)
+        return _.binSearchTree(this._cons(null, obj, null));
+      else {
+        var compare = this.comparator(struct.curr, obj);
+        if (compare < 0) {
+          var right = this.insert(obj, struct.right);
+          return _.binSearchTree(this._cons(struct.left, struct.curr, right.struct));
+        } else if (compare > 0) {
+          var left = this.insert(obj, struct.left);
+          return _.binSearchTree(this._cons(left.struct, struct.curr, struct.right));
+        }
+        // if they are the same, do nothing (allow no duplicates).
+      }
+    };
+
+    // Add your own custom functions to every binSearchTree object.
+    BinSearchTree.prototype.mixin = function (obj) {
+      mixin.apply(this, [obj, BinSearchTree.prototype]);
+    };
+
+    // Retrieve the value of the current node in the binSearchTree.
+    BinSearchTree.prototype.val = function (obj) {
+      if (obj)
+        return _.binSearchTree(this._cons(this.struct.left, obj, this.struct.right));
+      return this.struct.curr;
+    };
+
+    return BinSearchTree;
 
   }();
 
