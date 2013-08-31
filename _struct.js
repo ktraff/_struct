@@ -887,10 +887,12 @@
         this.struct = _.reduce(obj, function (struct, obj) {
           return this.insert(obj, struct).struct;
         }, null, this);
-      else if (isStrictObject(obj))
+      else if (this._validate(obj))
         this.struct = obj;
-      else
+      else if (obj)
         this.struct = this._cons(null, obj, null);
+      else
+        this.struct = null;
     }
 
     // Creates a bsTree node.
@@ -902,22 +904,46 @@
     // Exports a bsTree instance for use in an **Underscore.js** mixin.
     BinSearchTree.prototype._exports = function () {
       return {
-        bsTree: function (obj) {
-          return new BinSearchTree(obj);
+        bsTree: function (obj, comparator) {
+          return new BinSearchTree(obj, comparator);
         }
       };
+    };
+
+    // Returns true if the given object is a binary search tree node.
+    BinSearchTree.prototype._validate = function (obj) {
+        return isStrictObject(obj) &&
+               _.has(obj, 'left')  &&
+               _.has(obj, 'curr')  &&
+               _.has(obj, 'right');
     };
 
     // The default comparison function uses the global `compareTo` helper.
     BinSearchTree.prototype.comparator = compareTo;
 
+    // Finds an object in the binary search tree.
+    BinSearchTree.prototype.find = function (obj, comparator) {
+      if (this.struct === null)
+        return _.bsTree();
+      comparator = comparator || this.comparator;
+      var compare = comparator(this.struct.curr, obj);
+      if (compare < 0)
+        return this.right().find(obj, comparator);
+      else if (compare > 0)
+        return this.left().find(obj, comparator);
+      else if (compare === 0)
+        return this;
+    };
+
     // Inserts a node into the bsTree. Assume the struct
     // is the root of a bsTree, and the obj is the object to insert.
-    BinSearchTree.prototype.insert = function (obj, struct) {
+    BinSearchTree.prototype.insert = function (obj, struct, comparator) {
+      comparator = comparator || this.comparator;
+      struct = struct || this.struct || null;
       if (struct === null)
         return _.bsTree(this._cons(null, obj, null));
       else {
-        var compare = this.comparator(struct.curr, obj);
+        var compare = comparator(struct.curr, obj);
         if (compare < 0) {
           var right = this.insert(obj, struct.right);
           return _.bsTree(this._cons(struct.left, struct.curr, right.struct));
@@ -929,16 +955,26 @@
       }
     };
 
+    // Returns the left child of the tree.
+    BinSearchTree.prototype.left = function () {
+        return _.bsTree(this.struct.left);
+    };
+
     // Add your own custom functions to every bsTree object.
     BinSearchTree.prototype.mixin = function (obj) {
       mixin.apply(this, [obj, BinSearchTree.prototype]);
+    };
+
+    // Returns the right child of the tree.
+    BinSearchTree.prototype.right = function () {
+        return _.bsTree(this.struct.right);
     };
 
     // Retrieve the value of the current node in the bsTree.
     BinSearchTree.prototype.val = function (obj) {
       if (obj)
         return _.bsTree(this._cons(this.struct.left, obj, this.struct.right));
-      return this.struct.curr;
+      return this.struct ? this.struct.curr : this.struct;
     };
 
     return BinSearchTree;
