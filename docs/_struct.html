@@ -227,6 +227,27 @@ represents an object, but not a function or array.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
+              <p>Compares two elements.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> compareTo = <span class="function"><span class="keyword">function</span> <span class="params">(elem1, elem2)</span> {</span>
+    <span class="keyword">if</span> (elem1 &lt; elem2)
+      <span class="keyword">return</span> -<span class="number">1</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (elem1 &gt; elem2)
+      <span class="keyword">return</span> <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">0</span>;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
               <p>Simple equality function that returns true if the token <code>==</code>
 the given obj.</p>
 
@@ -239,11 +260,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Strict form of equals function.</p>
 
@@ -256,11 +277,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Define a container to keep track of all struct objects.</p>
 
@@ -273,11 +294,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2>Underscore Linked List</h2>
 
@@ -286,11 +307,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               
             </div>
@@ -302,11 +323,11 @@ the given obj.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Creates a new list object. Pass an array of elements, a valid list struct 
 object, or leave empty to initialize an empty list.</p>
@@ -325,11 +346,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Constructs a list element by placing the obj at the head of the list.</p>
 
@@ -342,11 +363,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Exports a list instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -363,11 +384,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>A modified version of _.each made for traversing lists.</p>
 
@@ -385,11 +406,11 @@ object, or leave empty to initialize an empty list.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Retrieves an element from the list, if it exists. Return 
 a new list with the found element, or an empty list if not found.</p>
@@ -412,11 +433,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Returns an empty list.</p>
 
@@ -429,11 +450,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Creates a new list, with the given obj inserted at the head of the list.</p>
 
@@ -447,11 +468,11 @@ a new list with the found element, or an empty list if not found.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Returns true if the current element is empty, and
 there exist no pointers to other elements in the list.</p>
@@ -465,11 +486,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Returns the length of the list.</p>
 
@@ -488,11 +509,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Add your own custom functions to every list object.</p>
 
@@ -505,11 +526,11 @@ there exist no pointers to other elements in the list.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Returns a list whose head is next element in the list. If a 
 num is provided, moves num spaces forward in the list.</p>
@@ -527,11 +548,11 @@ num is provided, moves num spaces forward in the list.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Returns a list with the given token removed. If no token
 is given, removes the current element. If no element could 
@@ -563,11 +584,11 @@ be found, returns the original list.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Returns the value of the current element in the zipper. If a
 value is provided, update the value of the current element.</p>
@@ -588,11 +609,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2>Underscore Zipper</h2>
 
@@ -601,11 +622,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               
             </div>
@@ -617,11 +638,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Creates a new zipper object.</p>
 
@@ -641,11 +662,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Constructs a zipper element at the beginning of a zipper, which consists of:
 1) A path back to the front of the zipper, 
@@ -663,11 +684,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Exports a zipper instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -684,11 +705,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Moves to the first element of the zipper.</p>
 
@@ -704,11 +725,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Returns the zipper with the last element removed.</p>
 
@@ -726,11 +747,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Inserts an element directly left of the current element.</p>
 
@@ -744,11 +765,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Inserts an element directly right of the current element.</p>
 
@@ -766,11 +787,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Moves to the last element of the zipper.</p>
 
@@ -786,11 +807,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Moves the cursor left. If a num is provided, moves num places
 to the left of the cursor.</p>
@@ -808,11 +829,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Add your own custom functions to every zipper object.</p>
 
@@ -825,11 +846,11 @@ to the left of the cursor.</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Removes the current element from the zipper. If a path to the element
 exists, points the path to the rest of the zipper.  If no elements 
@@ -860,11 +881,11 @@ element in the path.</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Moves the cursor right. If a num is provided, moves num places
 to the right of the cursor.</p>
@@ -882,11 +903,11 @@ to the right of the cursor.</p>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Returns the tail of the zipper, which includes all elements except
 the first element in the zipper.</p>
@@ -900,11 +921,11 @@ the first element in the zipper.</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Returns the value of the current element in the zipper. If a
 value is provided, update the value of the current element.</p>
@@ -925,11 +946,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <h2>Underscore Monad</h2>
 
@@ -938,11 +959,11 @@ value is provided, update the value of the current element.</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Monads provide a way to nest functions of a similar kind in the same container,
 acting as a functional pipeline, where data can be processed in steps. They
@@ -957,11 +978,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-48">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Creates a monad object.</p>
 
@@ -976,11 +997,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-49">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Exports a monad instance for use in an <strong>Underscore.js</strong> mixin.</p>
 
@@ -997,11 +1018,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-50">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>Runs a pipeline of functions defined by the Monad constructor.</p>
 
@@ -1009,6 +1030,23 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
             
             <div class="content"><div class='highlight'><pre>    Monad.prototype.process = <span class="function"><span class="keyword">function</span> <span class="params">(obj, fns)</span> {</span>
       <span class="keyword">return</span> <span class="keyword">this</span>.pipeline(<span class="keyword">this</span>._cons(obj), fns);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Add your own custom functions to every monad object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Monad.prototype.mixin = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      mixin.apply(<span class="keyword">this</span>, [obj, Monad.prototype]);
     };
 
     <span class="keyword">return</span> Monad;
@@ -1018,11 +1056,11 @@ require a type constructor, as well as a <code>bind()</code> and <code>pipeline(
         </li>
         
         
-        <li id="section-51">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>The dequelette below is basically a limited kind of deque, in which there can
 only store one, two, three or four items.  It is used to build a <code>deque</code> that
@@ -1037,11 +1075,11 @@ will serve as the structure underlying a finger tree.</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>The constructor creates a Dequelette of a specific type depending on 
 the number of elements provided. A single-element array creates a <code>one</code>
@@ -1050,9 +1088,9 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">Dequelette</span><span class="params">(arr)</span> {</span>
-      <span class="keyword">if</span> (_.isArray(arr) &amp;&amp; arr.length &gt; <span class="number">1</span>) {
+      <span class="keyword">if</span> (_.isArray(arr) &amp;&amp; arr.length) {
         <span class="keyword">if</span> (arr.length === <span class="number">1</span>)
-          <span class="keyword">return</span> <span class="keyword">new</span> one(arr);
+          <span class="keyword">return</span> <span class="keyword">new</span> one(arr[<span class="number">0</span>]);
         <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">2</span>)
           <span class="keyword">return</span> <span class="keyword">new</span> two(arr[<span class="number">0</span>], arr[<span class="number">1</span>]);
         <span class="keyword">else</span> <span class="keyword">if</span> (arr.length === <span class="number">3</span>)
@@ -1067,11 +1105,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>A dequelette with one object.</p>
 
@@ -1111,11 +1149,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <p>This should never happen.</p>
 
@@ -1137,11 +1175,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <p>A dequelette with two objects.</p>
 
@@ -1200,11 +1238,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-56">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <p>A dequelette with three objects.</p>
 
@@ -1263,11 +1301,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>A dequelette with four objects.</p>
 
@@ -1302,11 +1340,11 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <p>This should never happen.</p>
 
@@ -1340,55 +1378,6 @@ dequelette, two-element array creates a <code>two</code> dequelette, etc...</p>
         </li>
         
         
-        <li id="section-59">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
-              </div>
-              <p>The <code>deque</code> below is based on an <a href="http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx">article by Eric Lippert</a>
-and is used by a finger tree as a base structure upon which the tree is built. It can be one of three things:
-1. empty,
-2. a single element of a particular type T, or
-3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  _struct.fdeque = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-
-    DequeFactory.prototype.VERSION = VERSION;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-60">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
-              </div>
-              <p>The constructor creates a Deque of a specific type depending on the number of elements provided.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">DequeFactory</span><span class="params">(left, middle, right)</span> {</span>
-      <span class="keyword">var</span> isDef = [(left !== <span class="keyword">void</span> <span class="number">0</span>), (middle !== <span class="keyword">void</span> <span class="number">0</span>), (right !== <span class="keyword">void</span> <span class="number">0</span>)];
-      <span class="keyword">if</span> (isDef[<span class="number">0</span>] &amp;&amp; isDef[<span class="number">1</span>] &amp;&amp; isDef[<span class="number">2</span>])
-        <span class="keyword">return</span> <span class="keyword">new</span> deque(left, middle, right);
-      <span class="keyword">else</span> <span class="keyword">if</span> (isDef[<span class="number">0</span>])
-        <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(left);
-      <span class="keyword">else</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> emptyDeque();
-    }
-
-    
-
-    <span class="keyword">return</span> DequeFactory;
-  }();</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-61">
             <div class="annotation">
               
@@ -1417,7 +1406,7 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  structs.fingertree = _struct.fingertree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  structs.fingerTree = _struct.fingerTree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
     FingerTree.prototype.VERSION = VERSION;</pre></div></div>
             
@@ -1430,19 +1419,18 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
-              <p>The constructor creates a Deque of a specific type depending on the number of elements provided.</p>
+              <p>The constructor creates a Deque of a specific type depending on the number and type of elements provided.
+The <code>deque</code> used to build a finger tree is based on an <a href="http://blogs.msdn.com/b/ericlippert/archive/2008/02/12/immutability-in-c-part-eleven-a-working-double-ended-queue.aspx">article by Eric Lippert</a>
+It can be one of three things:
+1. empty,
+2. a single element of a particular type T, or
+3. a left dequelette of T, followed by a middle deque of dequelettes of T, followed by a right dequelette of T.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">FingerTree</span><span class="params">(left, middle, right)</span> {</span>
       <span class="keyword">var</span> isDef = [(left !== <span class="keyword">void</span> <span class="number">0</span>), (middle !== <span class="keyword">void</span> <span class="number">0</span>), (right !== <span class="keyword">void</span> <span class="number">0</span>)];
-      <span class="keyword">if</span> (isDef[<span class="number">0</span>] &amp;&amp; isDef[<span class="number">1</span>] &amp;&amp; isDef[<span class="number">2</span>])
-        <span class="keyword">return</span> <span class="keyword">new</span> deque(left, middle, right);
-      <span class="keyword">else</span> <span class="keyword">if</span> (isDef[<span class="number">0</span>])
-        <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(left);
-      <span class="keyword">else</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> emptyDeque();
-    }</pre></div></div>
+      <span class="keyword">if</span> (_.isArray(left)) {</pre></div></div>
             
         </li>
         
@@ -1453,17 +1441,12 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
-              <p>Exports a finger tree instance for use in an <strong>Underscore.js</strong> mixin.</p>
+              <p>An array of objects were directly passed in. Create a deque to hold them.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    FingerTree.prototype._exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-      <span class="keyword">return</span> {
-        fingertree: <span class="function"><span class="keyword">function</span> <span class="params">(left, middle, right)</span> {</span>
-          <span class="keyword">return</span> <span class="keyword">new</span> FingerTree(left, middle, right);
-        }
-      };
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">this</span>.struct = _.reduce(left, <span class="function"><span class="keyword">function</span> <span class="params">(deque, obj)</span> {</span> <span class="keyword">return</span> deque.insertRight(obj); }, <span class="keyword">new</span> emptyDeque());
+      } <span class="keyword">else</span> <span class="keyword">if</span> (isDef[<span class="number">0</span>] &amp;&amp; isDef[<span class="number">1</span>] &amp;&amp; isDef[<span class="number">2</span>]) {</pre></div></div>
             
         </li>
         
@@ -1473,6 +1456,123 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>Assume a left dequelette, followed by a deque of dequelettes, followed by a right dequelette were passed in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">this</span>.struct = <span class="keyword">new</span> deque(left, middle, right);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (isDef[<span class="number">0</span>]) {
+        <span class="keyword">if</span> (left <span class="keyword">instanceof</span> emptyDeque || left <span class="keyword">instanceof</span> singleDeque || left <span class="keyword">instanceof</span> deque)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>A deque was directly passed in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">this</span>.struct = left;
+        <span class="keyword">else</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>A single object was directly passed in. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">this</span>.struct = <span class="keyword">new</span> singleDeque(left);
+      } <span class="keyword">else</span>
+        <span class="keyword">this</span>.struct = <span class="keyword">new</span> emptyDeque();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Exports a finger tree instance for use in an <strong>Underscore.js</strong> mixin.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    FingerTree.prototype._exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> {
+        fingerTree: <span class="function"><span class="keyword">function</span> <span class="params">(left, middle, right)</span> {</span>
+          <span class="keyword">return</span> <span class="keyword">new</span> FingerTree(left, middle, right);
+        }
+      };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Add your own custom functions to every finger tree object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    FingerTree.prototype.mixin = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      mixin.apply(<span class="keyword">this</span>, [obj, FingerTree.prototype]);
+    };
+
+    FingerTree.prototype.isEmpty = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct.isEmpty();
+    };
+
+    FingerTree.prototype.insertLeft = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      <span class="keyword">return</span> _.fingerTree(<span class="keyword">this</span>.struct.insertLeft(obj));
+    };
+
+    FingerTree.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      <span class="keyword">return</span> _.fingerTree(<span class="keyword">this</span>.struct.insertRight(obj));
+    };
+
+    FingerTree.prototype.peekLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct.peekLeft();
+    };
+
+    FingerTree.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct.peekRight();
+    };
+
+    FingerTree.prototype.removeLeft = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> _.fingerTree(<span class="keyword">this</span>.struct.removeLeft());
+    };
+
+    FingerTree.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> _.fingerTree(<span class="keyword">this</span>.struct.removeRight());
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>A deque with no elements.</p>
 
@@ -1495,16 +1595,21 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
       EmptyDeque.prototype.insertLeft  =
       EmptyDeque.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
         <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(obj);
+      };
+
+      EmptyDeque.prototype.peekLeft  =
+      EmptyDeque.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">this</span>.struct;
       };</pre></div></div>
             
         </li>
         
         
-        <li id="section-66">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <p>This should never happen.</p>
 
@@ -1515,11 +1620,6 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
         <span class="keyword">return</span> <span class="keyword">this</span>;
       };
 
-      EmptyDeque.prototype.peekLeft  =
-      EmptyDeque.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-        <span class="keyword">return</span> <span class="keyword">this</span>.struct;
-      };
-
       <span class="keyword">return</span> EmptyDeque;
 
     }();</pre></div></div>
@@ -1527,11 +1627,11 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-72">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
               <p>A deque with one element.</p>
 
@@ -1552,21 +1652,21 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
       };
 
       SingleDeque.prototype.insertLeft  = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> singleDeque(obj), <span class="keyword">new</span> emptyDeque(), <span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.val()));
+        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> _struct.fdequelette([obj]), <span class="keyword">new</span> emptyDeque(), _struct.fdequelette([<span class="keyword">this</span>.struct]));
       };
 
       SingleDeque.prototype.insertRight = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.val()), <span class="keyword">new</span> emptyDeque(), <span class="keyword">new</span> singleDeque(obj));
-      };
-
-      SingleDeque.prototype.removeLeft  =
-      SingleDeque.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-        <span class="keyword">return</span> <span class="keyword">new</span> emptyDeque();
+        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> _struct.fdequelette([<span class="keyword">this</span>.struct]), <span class="keyword">new</span> emptyDeque(), _struct.fdequelette([obj]));
       };
 
       SingleDeque.prototype.peekLeft  =
       SingleDeque.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
         <span class="keyword">return</span> <span class="keyword">this</span>.struct;
+      };
+
+      SingleDeque.prototype.removeLeft  =
+      SingleDeque.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> <span class="keyword">new</span> emptyDeque();
       };
 
       <span class="keyword">return</span> SingleDeque;
@@ -1576,11 +1676,11 @@ constant-time access to the &quot;fingers&quot; (leaves) of the tree.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>A deque with thee elements: a left dequelette, a deque of dequelettes,
 and a right dequelette.</p>
@@ -1591,7 +1691,7 @@ and a right dequelette.</p>
 
       Deque.prototype.VERSION = VERSION;
 
-      Deque.prototype.TYPE = <span class="string">'full'</span>;
+      Deque.prototype.TYPE = <span class="string">'deque'</span>;
 
       <span class="function"><span class="keyword">function</span> <span class="title">Deque</span><span class="params">(left, middle, right)</span> {</span>
         <span class="keyword">this</span>.left = left;
@@ -1607,7 +1707,7 @@ and a right dequelette.</p>
       Deque.prototype.insertLeft  = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
         <span class="keyword">if</span> (!<span class="keyword">this</span>.left.full())
           <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left.insertLeft(obj), <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right);
-        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> fdequelette([obj, <span class="keyword">this</span>.left.peekLeft()]),
+        <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> _struct.fdequelette([obj, <span class="keyword">this</span>.left.peekLeft()]),
                          <span class="keyword">this</span>.middle.insertLeft(<span class="keyword">this</span>.left.removeLeft()),
                          <span class="keyword">this</span>.right);
       };
@@ -1617,29 +1717,7 @@ and a right dequelette.</p>
           <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right.insertRight(obj));
         <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left,
                          <span class="keyword">this</span>.middle.insertRight(<span class="keyword">this</span>.right.removeRight()),
-                         <span class="keyword">new</span> fdequelette([<span class="keyword">this</span>.right.peekRight(), obj]));
-      };
-
-      Deque.prototype.removeLeft  = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-        <span class="keyword">if</span> (<span class="keyword">this</span>.left.size() &gt; <span class="number">1</span>)
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left.removeLeft(), <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right);
-        <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="keyword">this</span>.middle.isEmpty())
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle.removeLeft(), <span class="keyword">this</span>.right);
-        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.right.size() &gt; <span class="number">1</span>)
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> fdequelette([<span class="keyword">this</span>.right.peekLeft()], <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right.removeLeft()));
-        <span class="keyword">else</span>
-          <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.right.peekLeft());
-      };
-
-      Deque.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-        <span class="keyword">if</span> (<span class="keyword">this</span>.right.size &gt; <span class="number">1</span>)
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right.removeRight());
-        <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="keyword">this</span>.middle.isEmpty())
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle.removeRight(), <span class="keyword">this</span>.middle.peekRight());
-        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.left.size() &gt; <span class="number">1</span>)
-          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left.removeRight(), <span class="keyword">this</span>.middle, <span class="keyword">new</span> fdequelette([<span class="keyword">this</span>.left.peekRight()]));
-        <span class="keyword">else</span>
-          <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.left.peekRight());
+                         <span class="keyword">new</span> _struct.fdequelette([<span class="keyword">this</span>.right.peekRight(), obj]));
       };
 
       Deque.prototype.peekLeft  = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
@@ -1648,6 +1726,28 @@ and a right dequelette.</p>
 
       Deque.prototype.peekRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
         <span class="keyword">return</span> <span class="keyword">this</span>.right.peekRight();
+      };
+
+      Deque.prototype.removeLeft  = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">if</span> (<span class="keyword">this</span>.left.size() &gt; <span class="number">1</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left.removeLeft(), <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right);
+        <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="keyword">this</span>.middle.isEmpty())
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle.removeLeft(), <span class="keyword">this</span>.right);
+        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.right.size() &gt; <span class="number">1</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">new</span> _struct.fdequelette([<span class="keyword">this</span>.right.peekLeft()]), <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right.removeLeft());
+        <span class="keyword">else</span>
+          <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.right.peekLeft());
+      };
+
+      Deque.prototype.removeRight = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">if</span> (<span class="keyword">this</span>.right.size() &gt; <span class="number">1</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle, <span class="keyword">this</span>.right.removeRight());
+        <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="keyword">this</span>.middle.isEmpty())
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left, <span class="keyword">this</span>.middle.removeRight(), <span class="keyword">this</span>.middle.peekRight());
+        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.left.size() &gt; <span class="number">1</span>)
+          <span class="keyword">return</span> <span class="keyword">new</span> deque(<span class="keyword">this</span>.left.removeRight(), <span class="keyword">this</span>.middle, <span class="keyword">new</span> _struct.fdequelette([<span class="keyword">this</span>.left.peekRight()]));
+        <span class="keyword">else</span>
+          <span class="keyword">return</span> <span class="keyword">new</span> singleDeque(<span class="keyword">this</span>.left.peekRight());
       };
 
       <span class="keyword">return</span> Deque;
@@ -1661,11 +1761,292 @@ and a right dequelette.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <h2>Underscore Binary Search Tree</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>A binary search tree are trees with at most two child nodes, with elements stored
+in symmetric order. This guarantees that the left subtree will always contain
+elements smaller than the node itself, and the right subtree will always contain
+elements larger than itself.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  structs.bsTree = _struct.bsTree = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+    BinSearchTree.prototype.VERSION = VERSION;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>Creates a new bsTree object. Pass an array of elements, a valid
+bsTree node, or leave empty to initialize an empty tree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">BinSearchTree</span><span class="params">(obj, comparator)</span> {</span>
+      <span class="keyword">if</span> (_.isFunction(comparator))
+        <span class="keyword">this</span>.comparator = comparator;
+      <span class="keyword">if</span> (_.isArray(obj))
+        <span class="keyword">this</span>.struct = _.reduce(obj, <span class="function"><span class="keyword">function</span> <span class="params">(struct, obj)</span> {</span>
+          <span class="keyword">return</span> <span class="keyword">this</span>.insert(obj, struct).struct;
+        }, <span class="literal">null</span>, <span class="keyword">this</span>);
+      <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>._validate(obj))
+        <span class="keyword">this</span>.struct = obj;
+      <span class="keyword">else</span> <span class="keyword">if</span> (obj)
+        <span class="keyword">this</span>.struct = <span class="keyword">this</span>._cons(<span class="literal">null</span>, obj, <span class="literal">null</span>);
+      <span class="keyword">else</span>
+        <span class="keyword">this</span>.struct = <span class="literal">null</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>Creates a bsTree node.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype._cons = <span class="function"><span class="keyword">function</span> <span class="params">(left, curr, right)</span> {</span>
+      curr = (curr === <span class="keyword">void</span> <span class="number">0</span>) ? <span class="literal">null</span> : curr;
+      <span class="keyword">return</span> { left: left, curr: curr, right: right };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>Exports a bsTree instance for use in an <strong>Underscore.js</strong> mixin.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype._exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> {
+        bsTree: <span class="function"><span class="keyword">function</span> <span class="params">(obj, comparator)</span> {</span>
+          <span class="keyword">return</span> <span class="keyword">new</span> BinSearchTree(obj, comparator);
+        }
+      };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>Returns true if the given object is a binary search tree node.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype._validate = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+        <span class="keyword">return</span> isStrictObject(obj) &amp;&amp;
+               _.has(obj, <span class="string">'left'</span>)  &amp;&amp;
+               _.has(obj, <span class="string">'curr'</span>)  &amp;&amp;
+               _.has(obj, <span class="string">'right'</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>The default comparison function uses the global <code>compareTo</code> helper.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.comparator = compareTo;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>Finds an object in the binary search tree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.find = <span class="function"><span class="keyword">function</span> <span class="params">(obj, comparator)</span> {</span>
+      <span class="keyword">if</span> (<span class="keyword">this</span>.struct === <span class="literal">null</span>)
+        <span class="keyword">return</span> _.bsTree();
+      comparator = comparator || <span class="keyword">this</span>.comparator;
+      <span class="keyword">var</span> compare = comparator(<span class="keyword">this</span>.struct.curr, obj);
+      <span class="keyword">if</span> (compare &lt; <span class="number">0</span>)
+        <span class="keyword">return</span> <span class="keyword">this</span>.right().find(obj, comparator);
+      <span class="keyword">else</span> <span class="keyword">if</span> (compare &gt; <span class="number">0</span>)
+        <span class="keyword">return</span> <span class="keyword">this</span>.left().find(obj, comparator);
+      <span class="keyword">else</span> <span class="keyword">if</span> (compare === <span class="number">0</span>)
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <p>Inserts a node into the bsTree. Assume the struct
+is the root of a bsTree, and the obj is the object to insert.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.insert = <span class="function"><span class="keyword">function</span> <span class="params">(obj, struct, comparator)</span> {</span>
+      comparator = comparator || <span class="keyword">this</span>.comparator;
+      struct = struct || <span class="keyword">this</span>.struct || <span class="literal">null</span>;
+      <span class="keyword">if</span> (struct === <span class="literal">null</span>)
+        <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>._cons(<span class="literal">null</span>, obj, <span class="literal">null</span>));
+      <span class="keyword">else</span> {
+        <span class="keyword">var</span> compare = comparator(struct.curr, obj);
+        <span class="keyword">if</span> (compare &lt; <span class="number">0</span>) {
+          <span class="keyword">var</span> right = <span class="keyword">this</span>.insert(obj, struct.right);
+          <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>._cons(struct.left, struct.curr, right.struct));
+        } <span class="keyword">else</span> <span class="keyword">if</span> (compare &gt; <span class="number">0</span>) {
+          <span class="keyword">var</span> left = <span class="keyword">this</span>.insert(obj, struct.left);
+          <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>._cons(left.struct, struct.curr, struct.right));
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-83">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-83">&#182;</a>
+              </div>
+              <p>if they are the same, do nothing (allow no duplicates).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-84">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Returns the left child of the tree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.left = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>.struct.left);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
+              </div>
+              <p>Add your own custom functions to every bsTree object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.mixin = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      mixin.apply(<span class="keyword">this</span>, [obj, BinSearchTree.prototype]);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-86">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-86">&#182;</a>
+              </div>
+              <p>Returns the right child of the tree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.right = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>.struct.right);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-87">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-87">&#182;</a>
+              </div>
+              <p>Retrieve the value of the current node in the bsTree.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    BinSearchTree.prototype.val = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+      <span class="keyword">if</span> (obj)
+        <span class="keyword">return</span> _.bsTree(<span class="keyword">this</span>._cons(<span class="keyword">this</span>.struct.left, obj, <span class="keyword">this</span>.struct.right));
+      <span class="keyword">return</span> <span class="keyword">this</span>.struct ? <span class="keyword">this</span>.struct.curr : <span class="keyword">this</span>.struct;
+    };
+
+    <span class="keyword">return</span> BinSearchTree;
+
+  }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-88">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>Mix-in a function to mix-in a hash of structs to the <strong>Underscore.js</strong> library.
 This can be used to add your own custom structs to the library.</p>
@@ -1683,11 +2064,11 @@ This can be used to add your own custom structs to the library.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>Add all struct objects to the <strong>Underscore.js</strong> library.</p>
 
