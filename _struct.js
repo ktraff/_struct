@@ -919,12 +919,18 @@
       };
     };
 
-    // Removes the current element from the struct.
-    BinSearchTree.prototype._removeCurr = function (struct, parent) {
+    // Removes a tree element from a parent tree struct.
+    BinSearchTree.prototype._removeElem = function (struct, parent) {
       if (!struct)
         return _.bsTree(struct);
-      else if (struct.left === null && struct.right === null)
-        return _.bsTree(this.struct);
+      if (parent) {
+        // TODO: remove 3 cases: no children, one child, and two children.
+        if (struct.left === null && struct.right === null) {
+          return this._cons(parent.left, parent.curr, null);
+        } 
+      } else {
+        // Assume that a root node is being replaced.
+      }
     };
 
     // Returns true if the given object is a binary search tree node.
@@ -1005,30 +1011,33 @@
     // Removes an element from a binary search tree. Passing an `undefined`
     // struct will default to using the bstree's tree structure for removal.
     BinSearchTree.prototype.remove = function (obj, struct, comparator, clone) {
-      var tree;
+      var tree = this;
       comparator = comparator || this.comparator;
       clone = clone || this.clone;
       struct = (struct === void 0) ? this.struct : struct ? struct : null;
       if (struct) {
         var compare = comparator(struct.curr, obj);
-        if (compare === 0) {
-          return this._removeCurr(struct);
-        }
+        if (compare === 0)
+          return _.bsTree(this._removeElem(struct));
         else {
-          var compareRight = comparator(struct.right, obj);
-          // TODO: compare right and left nodes for removal
-          if (compare < 0) {
-            tree = _.bsTree(this._cons(struct.left, clone(struct.curr), struct.right));
-            return tree.remove(obj, struct.right);
-          } else if (compare > 0) {
-            tree = _.bsTree(this._cons(struct.left, clone(struct.curr), struct.right));
-            return tree.remove(obj, struct.left);
-          } else {
-            // If they are the same, return the existing tree (allow no duplicates).
-            return this._removeCurr(struct);
+          tree = _.bsTree(this._cons(struct.left, clone(struct.curr), struct.right));
+          if (compare < 0 && struct.right) {
+            var compareRight = comparator(struct.right.curr, obj);
+            if (compareRight === 0)
+              tree.struct.right = this._removeElem(struct.right, struct).right;
+            else
+              tree.struct.right = tree.remove(obj, struct.right, comparator, clone).struct;
+          }
+          else if (compare > 0 && struct.left) {
+            var compareLeft = comparator(struct.left.curr, obj);
+            if (compareLeft === 0)
+              tree.struct.left = this._removeElem(struct.left, struct).left;
+            else
+              tree.struct.left = tree.remove(obj, struct.left, comparator, clone).struct;
           }
         }
       }
+      return tree;
     };
 
     // Returns the right child of the tree.
