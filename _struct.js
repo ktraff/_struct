@@ -926,11 +926,12 @@
     // 2. One child: replace the child element with the existing grandchild element.
     // 3. Two children: find the minimum element of the right subtree, replace the child
     //    element with the min element, and remove the min element from the right subtree.
-    BinSearchTree.prototype._removeChild = function (struct, isLeft, clone) {
+    BinSearchTree.prototype._removeChild = function (struct, isLeft, comparator, clone) {
+      comparator = comparator || this.comparator;
       clone = clone || this.clone;
       if (struct) {
         var result = this._cons(clone(struct.left), clone(struct.curr), clone(struct.right));
-        var child = isLeft ? struct.left : struct.right;
+        var child = isLeft ? clone(struct.left) : clone(struct.right);
         if (this._validate(child)) {
           if (child.left === null && child.right === null) {
             if (isLeft)
@@ -948,13 +949,22 @@
             else
               result.right = child.right;
           } else {
-            // TODO: find min elem from right subtree, replace child w/this and remove min node
+            var tree = _.bsTree(child);
+            var min = tree.successor();
+            child.curr = min.struct.curr;
+            child.right = tree.right().remove(tree.val()).struct;
+            if (isLeft) {
+              result.left = child;
+            } else {
+              result.right = child;
+            }
           }
           return result;
         }
         return struct;
       }
     };
+
 
     // Returns true if the given object is a binary search tree node.
     BinSearchTree.prototype._validate = function (obj) {
@@ -970,19 +980,6 @@
 
     // The default comparison function uses the global `compareTo` helper.
     BinSearchTree.prototype.comparator = compareTo;
-
-    // A modified version of _.each made for traversing bsTrees.
-    // Traversal can be breadth-first, pre-order dfs, in-order dfs,
-    // or post-order dfs.
-    BinSearchTree.prototype.each = function (iterator, options, context) {
-      options = options || { method: 'bfs' };
-      var queue = [];
-
-      /*while (list !== null) {
-        if (iterator.call(context, list.first, i++, list) === breaker) return;
-        list = list.rest;
-      }*/
-    };
 
     // Finds an object in the binary search tree.
     BinSearchTree.prototype.find = function (obj, comparator) {
@@ -1045,26 +1042,47 @@
         if (compare === 0) {
           // Create a temporary parent that will be used to remove the root element.
           tree = _.bsTree(this._cons(null, null, struct));
-          tree.struct = this._removeChild(tree.struct, false, clone).right;
+          var root = this._removeChild(tree.struct, false, comparator, clone).right;
+          return _.bsTree(root);
         } else {
           tree = _.bsTree(this._cons(struct.left, clone(struct.curr), struct.right));
           if (compare < 0 && struct.right) {
             var compareRight = comparator(struct.right.curr, obj);
             if (compareRight === 0)
-              tree.struct.right = this._removeChild(struct, false, clone).right;
+              tree.struct.right = this._removeChild(struct, false, comparator, clone).right;
             else
               tree.struct.right = tree.remove(obj, struct.right, comparator, clone).struct;
           }
           else if (compare > 0 && struct.left) {
             var compareLeft = comparator(struct.left.curr, obj);
             if (compareLeft === 0)
-              tree.struct.left = this._removeChild(struct, true, clone).left;
+              tree.struct.left = this._removeChild(struct, true, comparator, clone).left;
             else
               tree.struct.left = tree.remove(obj, struct.left, comparator, clone).struct;
           }
         }
       }
       return tree;
+    };
+
+    // Returns a tree whose element could replace the current element, defined as
+    // the minimum node of the right subtree or the maximum node of the left subtree.
+    BinSearchTree.prototype.successor = function (struct, useLeft) {
+      struct = struct || this.struct;
+      useLeft = useLeft || false;
+      var child = struct;
+      if (!useLeft) {
+        child = struct.right;
+        if (child)
+          while (child.left)
+            child = child.left;
+      } else {
+        child = struct.left;
+        if (child)
+          while (child.right)
+            child = child.right;
+      }
+      return _.bsTree(child);
     };
 
     // Returns the right child of the tree.
